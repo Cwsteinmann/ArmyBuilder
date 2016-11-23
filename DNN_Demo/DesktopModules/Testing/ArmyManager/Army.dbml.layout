@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 10.375" name="Army">
+  <DataContextMoniker Name="/ArmyDataContext" />
+  <nestedChildShapes>
+    <classShape Id="4b63a778-7811-4f09-9f66-2a8f4f61e876" absoluteBounds="3.75, 6.5, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_Army" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1bba29f8-ca60-47d4-8a15-f913255c77be" absoluteBounds="3.765, 6.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ba62b0d2-4875-4ec4-b879-ed270f9b5627" absoluteBounds="0.75, 6.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_WargearUpgrade" />
+      <nestedChildShapes>
+        <elementListCompartment Id="766ce3b6-907f-4fa8-9e74-cbfd2512b162" absoluteBounds="0.765, 6.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fd601451-d48a-4d4a-9dc6-d114e2c2f454" absoluteBounds="0.75, 8.875, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_RulesUpgrade" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d68e1f3-e737-4bb0-843c-6958d6bd4b05" absoluteBounds="0.765, 9.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2331962b-afb0-4886-894b-068dfd3f95df" absoluteBounds="0.75, 3.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_Unit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9d5ff0ee-b7c4-4175-a44b-08e9deb2b8d3" absoluteBounds="0.765, 3.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7953ecf0-8d6c-4f0b-9fd0-0f03aa2b2704" absoluteBounds="3.5, 3.875, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_Unit_Rule" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e28ff981-19d0-4ed0-80b7-1ed45a86ae93" absoluteBounds="3.515, 4.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d13bd703-adfb-4c59-ada7-2fc11be6ecad" absoluteBounds="3.5, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/ArmyDataContext/Engage_Unit_Wargear" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1fc7fa6a-e411-4e6b-bc31-c09fec909c84" absoluteBounds="3.515, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 9.47199625651042); (3.59375 : 9.47199625651042); (3.59375 : 5.06899251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ArmyDataContext/Engage_RulesUpgrade/Engage_RulesUpgrade_Engage_Unit_Rule" />
+      <nodes>
+        <classShapeMoniker Id="fd601451-d48a-4d4a-9dc6-d114e2c2f454" />
+        <classShapeMoniker Id="7953ecf0-8d6c-4f0b-9fd0-0f03aa2b2704" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.47199625651042); (3.04166666666667 : 4.47199625651042 : JumpStart); (3.20833333333333 : 4.47199625651042 : JumpEnd); (3.5 : 4.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ArmyDataContext/Engage_Unit/Engage_Unit_Engage_Unit_Rule" />
+      <nodes>
+        <classShapeMoniker Id="2331962b-afb0-4886-894b-068dfd3f95df" />
+        <classShapeMoniker Id="7953ecf0-8d6c-4f0b-9fd0-0f03aa2b2704" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.25091745577925); (3.125 : 5.87591745577925); (3.125 : 1.44314697265625); (3.5 : 1.44314697265625)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ArmyDataContext/Engage_WargearUpgrade/Engage_WargearUpgrade_Engage_Unit_Wargear" />
+      <nodes>
+        <classShapeMoniker Id="ba62b0d2-4875-4ec4-b879-ed270f9b5627" />
+        <classShapeMoniker Id="d13bd703-adfb-4c59-ada7-2fc11be6ecad" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 3.5); (1.75 : 1.82097295898437); (3.04166666666667 : 1.82097295898437 : JumpStart); (3.20833333333333 : 1.82097295898437 : JumpEnd); (3.5 : 1.82097295898437)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ArmyDataContext/Engage_Unit/Engage_Unit_Engage_Unit_Wargear" />
+      <nodes>
+        <classShapeMoniker Id="2331962b-afb0-4886-894b-068dfd3f95df" />
+        <classShapeMoniker Id="d13bd703-adfb-4c59-ada7-2fc11be6ecad" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

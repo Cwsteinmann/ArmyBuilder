@@ -1,3 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="false" CodeBehind="ViewArmyManager.ascx.cs" Inherits="Testing.Dnn.ArmyManager.ViewArmyManager" %>
-<asp:Label runat="server" ResourceKey="Hello World!" />
-<asp:Label runat="server" ID="SettingLabel" Text='<%# Model.SampleSettingMessage %>' />
+<%@ Register TagPrefix="Testing" TagName="UnitForm" Src="./Controls/UnitForm.ascx" %>
+
+<div>
+    <Testing:UnitForm runat="server" ID="t1Form" DisplayUnit="<%#Model.DisplayUnit %>" OnRuleUpgradeChecked="t1Form_OnRuleUpgradeChecked" />
+</div>

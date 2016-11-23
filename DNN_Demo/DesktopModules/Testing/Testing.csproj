@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -112,12 +112,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmyManager\Army.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Army.dbml</DependentUpon>
+    </Compile>
     <Compile Include="ArmyManager\FeaturesController.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerController.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerRouter.cs" />
     <Compile Include="ArmyManager\API\GetArmyManagerRequest.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerViewModel.cs" />
     <Compile Include="ArmyManager\Settings\SettingsViewModel.cs" />
+    <Compile Include="ArmyManager\Termagant.cs" />
+    <Compile Include="ArmyManager\Unit.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.cs">
+      <DependentUpon>UnitForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.designer.cs">
+      <DependentUpon>UnitForm.ascx</DependentUpon>
+    </Compile>
     <Compile Include="ArmyManager\ViewArmyManager\ViewArmyManagerViewModel.cs" />
     <Compile Include="ArmyManager\ArmyManagerSettings.cs" />
     <Compile Include="ArmyManager\Settings\SettingsPresenter.cs" />
@@ -145,8 +159,14 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="ArmyManager\Settings\Settings.ascx" />
+    <Content Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx" />
     <Content Include="SQL\Uninstall.sql" />
     <Content Include="SQL\0.1.0.sql" />
+    <Content Include="ArmyManager\Army.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Army.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Testing.dnn" />
     <None Include="Testing.build" />
     <None Include="Correctness, Design, Globalization, and Security.ruleset" />
@@ -158,19 +178,22 @@
     <Content Include="ArmyManager\module.less" />
     <Content Include="ReleaseNotes_00.01.00.htm" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="ArmyManager\Settings\App_LocalResources\Settings.ascx.resx" />
     <Content Include="ArmyManager\ViewArmyManager\App_LocalResources\ViewArmyManager.ascx.resx" />
-    <Content Include="ArmyManager\ViewArmyManager\Main.elm" />
-    <Content Include="ArmyManager\ViewArmyManager\Elm\Model.elm" />
-    <Content Include="ArmyManager\ViewArmyManager\Elm\Update.elm" />
-    <Content Include="ArmyManager\ViewArmyManager\Elm\View.elm" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ArmyManager\Army.dbml.layout">
+      <DependentUpon>Army.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

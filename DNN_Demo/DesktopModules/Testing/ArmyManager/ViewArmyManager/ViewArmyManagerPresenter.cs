@@ -6,9 +6,12 @@ namespace Testing.Dnn.ArmyManager
 {
     using System;
     using System.Globalization;
+    using System.Linq;
 
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Mvp;
+
+    using Testing.Dnn.ArmyManager.ArmyManager;
 
     using WebFormsMvp;
 
@@ -21,13 +24,7 @@ namespace Testing.Dnn.ArmyManager
             : base(view)
         {
             this.View.Initialize += this.View_Initialize;
-        }
-
-        /// <summary>Gets the sample setting value.</summary>
-        /// <value>The sample setting.</value>
-        private string SampleSetting
-        {
-            get { return ArmyManagerSettings.SampleSetting.GetValueAsStringFor(FeaturesController.SettingsPrefix, this.ModuleContext.Configuration, ArmyManagerSettings.SampleSetting.DefaultValue); }
+            this.View.RoleUpgradeChecked += this.View_RoleUpgradeChecked;
         }
 
         /// <summary>Handles the <see cref="IModuleViewBase.Initialize"/> event of the <see cref="Presenter{TView}.View"/>.</summary>
@@ -37,7 +34,19 @@ namespace Testing.Dnn.ArmyManager
         {
             try
             {
-                this.View.Model.SampleSettingMessage = string.Format(CultureInfo.CurrentCulture, Localization.GetString("SettingLabel.Format", this.LocalResourceFile), this.SampleSetting);
+                this.View.Model.DisplayUnit = new Termagant();
+            }
+            catch (Exception exc)
+            {
+                this.ProcessModuleLoadException(exc);
+            }
+        }
+
+        private void View_RoleUpgradeChecked(object sender, RuleUpgradeCheckedEventArgs e)
+        {
+            try
+            {
+                this.View.Model.DisplayUnit.SetUpgrade(e.SelectedValues.First());
             }
             catch (Exception exc)
             {

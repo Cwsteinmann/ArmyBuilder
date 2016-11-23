@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DNN_Demo" Class="ArmyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=DNN_Demo;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SiteSqlServer" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Engage_Army" Member="Engage_Armies">
+    <Type Name="Engage_Army">
+      <Column Name="ArmyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ArmyName" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Engage_WargearUpgrades" Member="Engage_WargearUpgrades">
+    <Type Name="Engage_WargearUpgrade">
+      <Column Name="WargearID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Wargear" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Association Name="Engage_WargearUpgrade_Engage_Unit_Wargear" Member="Engage_Unit_Wargears" ThisKey="WargearID" OtherKey="WargearID" Type="Engage_Unit_Wargear" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Engage_RulesUpgrades" Member="Engage_RulesUpgrades">
+    <Type Name="Engage_RulesUpgrade">
+      <Column Name="RuleID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RuleName" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="Engage_RulesUpgrade_Engage_Unit_Rule" Member="Engage_Unit_Rules" ThisKey="RuleID" OtherKey="RuleID" Type="Engage_Unit_Rule" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Engage_Unit" Member="Engage_Units">
+    <Type Name="Engage_Unit">
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ArmyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Squad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Size" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Engage_Unit_Engage_Unit_Rule" Member="Engage_Unit_Rules" ThisKey="UnitId" OtherKey="UnitID" Type="Engage_Unit_Rule" />
+      <Association Name="Engage_Unit_Engage_Unit_Wargear" Member="Engage_Unit_Wargears" ThisKey="UnitId" OtherKey="UnitID" Type="Engage_Unit_Wargear" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Engage_Unit_Rules" Member="Engage_Unit_Rules">
+    <Type Name="Engage_Unit_Rule">
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RuleID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Engage_RulesUpgrade_Engage_Unit_Rule" Member="Engage_RulesUpgrade" ThisKey="RuleID" OtherKey="RuleID" Type="Engage_RulesUpgrade" IsForeignKey="true" />
+      <Association Name="Engage_Unit_Engage_Unit_Rule" Member="Engage_Unit" ThisKey="UnitID" OtherKey="UnitId" Type="Engage_Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Engage_Unit_Wargear" Member="Engage_Unit_Wargears">
+    <Type Name="Engage_Unit_Wargear">
+      <Column Name="UnitID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="WargearID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Engage_WargearUpgrade_Engage_Unit_Wargear" Member="Engage_WargearUpgrade" ThisKey="WargearID" OtherKey="WargearID" Type="Engage_WargearUpgrade" IsForeignKey="true" />
+      <Association Name="Engage_Unit_Engage_Unit_Wargear" Member="Engage_Unit" ThisKey="UnitID" OtherKey="UnitId" Type="Engage_Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

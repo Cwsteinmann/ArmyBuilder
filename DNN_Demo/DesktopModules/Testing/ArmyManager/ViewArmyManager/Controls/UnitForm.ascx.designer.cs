@@ -10,15 +10,24 @@
 namespace Testing.Dnn.ArmyManager {
     
     
-    public partial class ViewArmyManager {
+    public partial class UnitForm {
         
         /// <summary>
-        /// t1Form control.
+        /// sizeInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Testing.Dnn.ArmyManager.UnitForm t1Form;
+        protected global::System.Web.UI.WebControls.TextBox sizeInput;
+        
+        /// <summary>
+        /// RuleUpgradesCheckBoxList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList RuleUpgradesCheckBoxList;
     }
 }
