@@ -1,0 +1,76 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="Testing: Army Manager" type="Module" version="0.1.0">
+      <friendlyName>Testing: Army Manager</friendlyName>
+      <description></description>
+      <iconFile>DesktopModules/Testing/Testing-icon32.png</iconFile>
+      <owner>
+        <name>Engage Software</name>
+        <organization>Engage Software</organization>
+        <url>http://www.engagesoftware.com/</url>
+        <email>support@engagemodules.com</email>
+      </owner>
+      <license>This is a custom package developed by Engage Software for Testing. This package is intended for the exclusive use by Testing. Any use of this package outside this intention is at the discretion of Testing. If you have additional questions regarding the appropriate use of this module, please contact Engage Software at http://www.engagesoftware.com.</license>
+      <releaseNotes src="ReleaseNotes_0.1.0.htm" />
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">5.0.0</dependency>
+      </dependencies>
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/Testing</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules/Testing/SQL</basePath>
+            <script type="Install">
+              <name>0.1.0.sql</name>
+              <version>0.1.0</version>
+            </script>
+            <script type="UnInstall">
+              <name>Uninstall.sql</name>
+            </script>
+          </scripts>
+        </component>
+        <component type="Module">
+          <desktopModule>
+            <moduleName>Testing: Army Manager</moduleName>
+            <foldername>Testing/ArmyManager</foldername>
+            <businessControllerClass>Testing.Dnn.ArmyManager.FeaturesController</businessControllerClass>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Testing: Army Manager</friendlyName>
+                <definitionName>Testing: Army Manager</definitionName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey/>
+                    <controlSrc>DesktopModules/Testing/ArmyManager/ViewArmyManager/ViewArmyManager.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlType>View</controlType>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Settings</controlKey>
+                    <controlSrc>DesktopModules/Testing/ArmyManager/Settings/Settings.ascx</controlSrc>
+                    <controlTitle>Testing: Army Manager Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <!-- this will be filled by NAnt -->
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>
