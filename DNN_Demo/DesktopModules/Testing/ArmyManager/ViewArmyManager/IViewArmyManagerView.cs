@@ -11,6 +11,15 @@ namespace Testing.Dnn.ArmyManager
     /// <summary>The contract of the main view</summary>
     public interface IViewArmyManagerView : IModuleView<ViewArmyManagerViewModel>
     {
+        /// <summary>
+        /// Event for setting rule upgrades
+        /// </summary>
         event EventHandler<RuleUpgradeCheckedEventArgs> RoleUpgradeChecked;
+
+        /// <summary>
+        /// event for setting size of unit
+        /// </summary>
+        event EventHandler<ButtonSubmitSizeEventArgs> ButtonSubmitClicked;
     }
+
 }

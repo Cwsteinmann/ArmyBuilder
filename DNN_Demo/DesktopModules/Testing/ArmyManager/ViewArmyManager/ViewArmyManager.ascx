@@ -2,5 +2,5 @@
 <%@ Register TagPrefix="Testing" TagName="UnitForm" Src="./Controls/UnitForm.ascx" %>
 
 <div>
-    <Testing:UnitForm runat="server" ID="t1Form" DisplayUnit="<%#Model.DisplayUnit %>" OnRuleUpgradeChecked="t1Form_OnRuleUpgradeChecked" />
+    <Testing:UnitForm runat="server" ID="t1Form" DisplayUnit="<%#this.Model.DisplayUnit %>" />
 </div>

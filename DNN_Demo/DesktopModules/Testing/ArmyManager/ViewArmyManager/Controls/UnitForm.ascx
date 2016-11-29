@@ -1,66 +1,81 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="UnitForm.ascx.cs" Inherits="Testing.Dnn.ArmyManager.UnitForm" %>
 <%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="System.Runtime.CompilerServices" %>
 
 <div>
-    <h3><%: this.DisplayUnit.name %></h3>
-    <h4><%: this.DisplayUnit.totalCost %> points</h4>
-    <span>
-        <h5><%: string.Format("{0} ({1}/{2})", this.DisplayUnit.currentSize, this.DisplayUnit.initialSize, this.DisplayUnit.maxSize) %> </h5>
-        <asp:TextBox runat="server" ID="sizeInput" />
-        <%--
-        <asp:Button runat="server" ID="btnSize" OnClick="submitSize" Text="Set Unit Size" />
-        --%>
-    </span>
-    <table>
+    <h5> <%#:this.DisplayUnit.UnitData.Name %>  <span ID="SmallerHeader" style="font-size: 16px">Size: <%#: this.DisplayUnit.SizeData.InitialSize %> - <%#: this.DisplayUnit.SizeData.MaxSize %></span></h5>
+    
+    <p>Type : <%#: this.DisplayUnit.UnitData.Type%> &nbsp;&nbsp;&nbsp; Slot Type : <%#: this.DisplayUnit.UnitData.SlotType %></p>
+   
+    <p>Total Cost : <%#:this.DisplayUnit.UnitData.Cost %></p>
+    
+    <table class="dnnGrid">
         <thead>
-            <th>WS</th>
-            <th>BS</th>
-            <th>S</th>
-            <th>T</th>
-            <th>W</th>
-            <th>I</th>
-            <th>A</th>
-            <th>Ld</th>
-            <th>Sv</th>
+            <tr class="dnnGridHeader">
+            <% foreach (var key in this.DisplayUnit.UnitData.Stats.Keys) { %>
+                <th><%: key %></th>
+                <% } %>
+            </tr>
         </thead>
+    
         <tbody>
-            <td><%: this.DisplayUnit.ws %></td>
-            <td><%: this.DisplayUnit.bs %></td>
-            <td><%: this.DisplayUnit.s %></td>
-            <td><%: this.DisplayUnit.t %></td>
-            <td><%: this.DisplayUnit.w %></td>
-            <td><%: this.DisplayUnit.i %></td>
-            <td><%: this.DisplayUnit.a %></td>
-            <td><%: this.DisplayUnit.ld %></td>
-            <td><%: this.DisplayUnit.sv %></td>
+            <tr class="dnnGridItem"><% foreach (var value in this.DisplayUnit.UnitData.Stats.Values) { %>
+            <td><%: value %></td>
+            <% } %>
+            </tr> 
         </tbody>
-    </table>
-    <p>Unit Type: <%: this.DisplayUnit.unitType %></p>
+        </table>
     
-    <h4>Special Rules:</h4>
-    <ul ID="rulesList">
-        <% foreach (var rule in this.DisplayUnit.specialRules) { %>
-            <li><%: rule %></li>
-        <% } %>
-    </ul>
+    <div>
+        <asp:Label runat="server" >Size: </asp:Label>
+        <asp:TextBox runat="server" ID="SizeInput" Text="<%#:this.DisplayUnit.SizeData.CurrentSize %>" Style="text-align:right; width:75px;"/>
+        <asp:Button runat="server" ID="ButtonSetSize" Text="Set Unit Size"/>
+    </div>
+
+    <div ID="UnitRulesDiv">
+        <h4>Special Rules:</h4>
+        <ul ID="rulesList">
+            <% foreach (var rule in this.DisplayUnit.Rules) { %>
+                <li><%: rule.Name %></li>
+            <% } %>
+        </ul>
     
-    <asp:CheckBoxList runat="server" 
-                      ID="RuleUpgradesCheckBoxList"
-                      DataSource="<%#RulesUpgrades %>"
-                      DataTextField="Item1"
-                      DataValueField="Item2"
-                      RepeatLayout="UnorderedList"
-                      AutoPostBack="True"
-                      OnSelectedIndexChanged="RuleUpgradesCheckBoxList_OnSelectedIndexChanged" />
+        <asp:CheckBoxList runat="server" 
+                          ID="RuleUpgradesCheckBoxList"
+                          DataSource="<%# this.DisplayUnit.RuleOptions %>"
+                          ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.RuleUpgradeViewModel"
+                          DataTextField="DisplayString"
+                          DataValueField="Name"
+                          RepeatLayout="UnorderedList"
+                          AutoPostBack="True"
+                          OnSelectedIndexChanged="RuleUpgradesCheckBoxList_OnSelectedIndexChanged"
+                          OnDataBound="RuleUpgradesCheckBoxList_OnDataBound"/>
+    </div>
+        
+    <div ID="UnitWargearDiv">
+        <asp:Repeater runat="server" ID="WargearRepeater" DataSource="<%#this.DisplayUnit.Wargear %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.WarGearViewModel">
+            <HeaderTemplate>
+                <ul style="margin-left: 0;"> 
+            </HeaderTemplate>
+            <ItemTemplate>
+                <li style="list-style-type: none;">
+                    <asp:TextBox runat="server" ID="WargearInput" Text="<%#:Item.NumberOfThings %>" Style="text-align:right; width:50px;"/>
+                    <asp:Label runat="server" ID="WargearLabel" AssociatedControlID="WargearInput">
+                        <span><%#: Item.DisplayString %></span>
+                    </asp:Label>
+                </li>
+            </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+                <asp:Button runat="server" Text="Set Wargear"/>
+            </FooterTemplate>
+        </asp:Repeater>
+    </div>
 </div>
 
 <script runat="server">
+    
+    
 
-    IEnumerable<Tuple<string, string>> RulesUpgrades {
-        get {
-            return from upgrade in this.DisplayUnit.rulesUpgrades
-                   let displayText = string.Format(CultureInfo.CurrentCulture, "{0} — {1} pts/model", upgrade.Key, upgrade.Value)
-                   select Tuple.Create(displayText, upgrade.Key);
-        }
-    } 
+
 </script>

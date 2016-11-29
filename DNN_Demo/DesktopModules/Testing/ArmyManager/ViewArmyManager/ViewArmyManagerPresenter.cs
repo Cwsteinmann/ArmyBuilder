@@ -5,6 +5,7 @@
 namespace Testing.Dnn.ArmyManager
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
@@ -25,6 +26,7 @@ namespace Testing.Dnn.ArmyManager
         {
             this.View.Initialize += this.View_Initialize;
             this.View.RoleUpgradeChecked += this.View_RoleUpgradeChecked;
+            this.View.ButtonSubmitClicked += this.View_ButtonSubmitClicked;
         }
 
         /// <summary>Handles the <see cref="IModuleViewBase.Initialize"/> event of the <see cref="Presenter{TView}.View"/>.</summary>
@@ -34,7 +36,7 @@ namespace Testing.Dnn.ArmyManager
         {
             try
             {
-                this.View.Model.DisplayUnit = new Termagant();
+                this.View.Model.DisplayUnit = new ViewArmyManagerViewModel.UnitViewModel(new Termagant());
             }
             catch (Exception exc)
             {
@@ -46,7 +48,22 @@ namespace Testing.Dnn.ArmyManager
         {
             try
             {
-                this.View.Model.DisplayUnit.SetUpgrade(e.SelectedValues.First());
+                foreach (var upgrade in e.SelectedValues)
+                {
+                    //this.View.Model.DisplayUnit.SetUpgrade(upgrade);
+                }
+            }
+            catch (Exception exc)
+            {
+                this.ProcessModuleLoadException(exc);
+            }
+        }
+
+        private void View_ButtonSubmitClicked(object sender, ButtonSubmitSizeEventArgs e)
+        {
+            try
+            {
+                //this.View.Model.DisplayUnit.SetUnits(e.Amount);
             }
             catch (Exception exc)
             {

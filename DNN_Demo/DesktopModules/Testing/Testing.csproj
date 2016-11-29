@@ -125,6 +125,7 @@
     <Compile Include="ArmyManager\Settings\SettingsViewModel.cs" />
     <Compile Include="ArmyManager\Termagant.cs" />
     <Compile Include="ArmyManager\Unit.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\Army.cs" />
     <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.cs">
       <DependentUpon>UnitForm.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -160,6 +161,7 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="ArmyManager\Settings\Settings.ascx" />
     <Content Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx" />
+    <Content Include="bin\DotNetNuke.dll" />
     <Content Include="SQL\Uninstall.sql" />
     <Content Include="SQL\0.1.0.sql" />
     <Content Include="ArmyManager\Army.dbml">

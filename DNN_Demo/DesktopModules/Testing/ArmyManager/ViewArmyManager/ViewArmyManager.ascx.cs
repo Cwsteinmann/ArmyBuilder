@@ -14,11 +14,34 @@ namespace Testing.Dnn.ArmyManager
     [PresenterBinding(typeof(ViewArmyManagerPresenter))]
     public partial class ViewArmyManager : ModuleView<ViewArmyManagerViewModel>, IViewArmyManagerView
     {
+        /// <summary>
+        /// Rule Checked
+        /// </summary>
         public event EventHandler<RuleUpgradeCheckedEventArgs> RoleUpgradeChecked;
 
-        protected void t1Form_OnRuleUpgradeChecked(object sender, RuleUpgradeCheckedEventArgs e)
+        /// <summary>
+        /// Button Submit
+        /// </summary>
+        public event EventHandler<ButtonSubmitSizeEventArgs> ButtonSubmitClicked;
+
+        /// <summary>
+        /// Action for checkboxes in unit view
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">event arguments</param>
+        protected void T1Form_OnRuleUpgradeChecked(object sender, RuleUpgradeCheckedEventArgs e)
         {
             this.RoleUpgradeChecked?.Invoke(this, new RuleUpgradeCheckedEventArgs(e.SelectedValues));
+        }
+
+        /// <summary>
+        /// Action to change unit size
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">event arguments</param>
+        protected void T1Form_OnButtonSubmitSizeClicked(object sender, ButtonSubmitSizeEventArgs e)
+        {
+            this.ButtonSubmitClicked?.Invoke(this, new ButtonSubmitSizeEventArgs(e.Amount));
         }
     }
 }
