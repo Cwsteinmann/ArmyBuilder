@@ -729,6 +729,8 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		
 		private int _MaxPoints;
 		
+		private EntitySet<Engage_Unit> _Units;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -743,6 +745,7 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		
 		public Engage_Army()
 		{
+			this._Units = new EntitySet<Engage_Unit>(new Action<Engage_Unit>(this.attach_Units), new Action<Engage_Unit>(this.detach_Units));
 			OnCreated();
 		}
 		
@@ -806,6 +809,19 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Army_Engage_Unit", Storage="_Units", ThisKey="ArmyID", OtherKey="ArmyId")]
+		public EntitySet<Engage_Unit> Units
+		{
+			get
+			{
+				return this._Units;
+			}
+			set
+			{
+				this._Units.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -824,6 +840,18 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Units(Engage_Unit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Army = this;
+		}
+		
+		private void detach_Units(Engage_Unit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Army = null;
 		}
 	}
 	
@@ -847,6 +875,8 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		
 		private EntitySet<Engage_Unit_Wargear> _Engage_Unit_Wargears;
 		
+		private EntityRef<Engage_Army> _Army;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -867,6 +897,7 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		{
 			this._Engage_Unit_Rules = new EntitySet<Engage_Unit_Rule>(new Action<Engage_Unit_Rule>(this.attach_Engage_Unit_Rules), new Action<Engage_Unit_Rule>(this.detach_Engage_Unit_Rules));
 			this._Engage_Unit_Wargears = new EntitySet<Engage_Unit_Wargear>(new Action<Engage_Unit_Wargear>(this.attach_Engage_Unit_Wargears), new Action<Engage_Unit_Wargear>(this.detach_Engage_Unit_Wargears));
+			this._Army = default(EntityRef<Engage_Army>);
 			OnCreated();
 		}
 		
@@ -901,6 +932,10 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			{
 				if ((this._ArmyId != value))
 				{
+					if (this._Army.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnArmyIdChanging(value);
 					this.SendPropertyChanging();
 					this._ArmyId = value;
@@ -993,6 +1028,40 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			set
 			{
 				this._Engage_Unit_Wargears.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Army_Engage_Unit", Storage="_Army", ThisKey="ArmyId", OtherKey="ArmyID", IsForeignKey=true)]
+		public Engage_Army Army
+		{
+			get
+			{
+				return this._Army.Entity;
+			}
+			set
+			{
+				Engage_Army previousValue = this._Army.Entity;
+				if (((previousValue != value) 
+							|| (this._Army.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Army.Entity = null;
+						previousValue.Units.Remove(this);
+					}
+					this._Army.Entity = value;
+					if ((value != null))
+					{
+						value.Units.Add(this);
+						this._ArmyId = value.ArmyID;
+					}
+					else
+					{
+						this._ArmyId = default(int);
+					}
+					this.SendPropertyChanged("Army");
+				}
 			}
 		}
 		

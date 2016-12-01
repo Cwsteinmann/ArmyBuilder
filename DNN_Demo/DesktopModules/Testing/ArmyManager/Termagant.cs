@@ -9,7 +9,6 @@
     /// Termagant Unit (Troop)
     /// </summary>
     public class Termagant : Unit
-
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Termagant"/> class.
@@ -18,6 +17,7 @@
         {
             this.Type = "Infantry";
             this.Name = "Termagant";
+            this.ServerID = 1;
             this.UnitType = "Troops";
             this.InitialPoints = 40;
             this.InitialSize = 10;
@@ -61,10 +61,7 @@
                 { "Spike Rifle", 0 },
                 { "StrangleWeb", 0 },
             };
-
-            this.TotalCost = 40;
-
-        }
+    }
 
         /// <summary>
         /// Sets the selected wargear of the unit by weapon name and amount, and recalculates cost
@@ -79,7 +76,6 @@
                 this.CurrentSize - (from entry in this.SelectedWargearUpgrades
                                      where entry.Key != this.InitialWargear
                                      select entry.Value).Sum();
-            this.SetTotalCost();
         }
 
         /// <summary>
@@ -104,7 +100,6 @@
                 this.CurrentSize - (from entry in this.SelectedWargearUpgrades
                                      where entry.Key != this.InitialWargear
                                      select entry.Value).Sum();
-            this.SetTotalCost();
         }
     }
 }

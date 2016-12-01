@@ -5,11 +5,25 @@
 
     public class Unit
     {
+        private int currentSize;
+
+        public Unit()
+        {
+        }
+
+        public Unit(Engage_Unit dbUnit)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the Unit ID to be set by the server
         /// </summary>
         public int UnitID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID the server uses in place of unit name
+        /// </summary>
+        public int ServerID { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the unit (Eg. Infantry, Beasts, etc)
@@ -74,7 +88,29 @@
         /// <summary>
         /// Gets or sets the current size of the unit
         /// </summary>
-        public int CurrentSize { get; set; }
+        public int CurrentSize
+        {
+            get
+            {
+                return this.currentSize;
+            }
+
+            set
+            {
+                if (value > this.MaxSize)
+                {
+                    this.currentSize = this.MaxSize;
+                }
+                else if (value < this.InitialSize)
+                {
+                    this.currentSize = this.InitialSize;
+                }
+                else
+                {
+                    this.currentSize = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the list of the upgrades that have actually been selected
@@ -87,27 +123,24 @@
         public Dictionary<string, int> SelectedWargearUpgrades { get; set; }
 
         /// <summary>
-        /// Gets or sets total calculated cost of the unit
+        /// Gets total calculated cost of the unit
         /// </summary>
-        public int TotalCost { get; set; }
-
-        /// <summary>
-        /// calculate total cost of the unit - by size, selected wargear upgrades, and selected rule upgrades
-        /// </summary>
-        public void SetTotalCost()
-        {
-            var cost = 0;
-            cost += this.CurrentSize * this.CostPerUnit;
-            cost += this.GetUpgradePrice();
-            cost += this.GetWargearPrice();
-            this.TotalCost = cost;
+        public int TotalCost {
+            get
+            {
+                var cost = 0;
+                cost += this.CurrentSize * this.CostPerUnit;
+                cost += this.GetUpgradePrice();
+                cost += this.GetWargearPrice();
+                return cost;
+            }
         }
 
         /// <summary>
         /// gets the cost associated with wargear upgrades for the unit
         /// </summary>
         /// <returns>cost of the wargear</returns>
-        public int GetWargearPrice()
+        private int GetWargearPrice()
         {
             var cost = (from selected in this.SelectedWargearUpgrades
                         from wargear in this.WargearUpgrades
@@ -121,7 +154,7 @@
         /// gets the cost associated with the rule ugprades for the unit
         /// </summary>
         /// <returns>cost of the rule upgrades</returns>
-        public int GetUpgradePrice()
+        private int GetUpgradePrice()
         {
             var cost = (from upgrade in this.SelectedRuleUpgrades
                         from entry in this.RulesUpgrades
@@ -131,26 +164,14 @@
             return cost;
         }
 
-        /// <summary>
-        /// Sets the size of the unit, recalculates unit total cost
-        /// </summary>
-        /// <param name="size">user input for unit size</param>
-        public void SetUnits(int size)
+        public void SetWargear(string weapon, int amount)
         {
-            if (size > this.MaxSize)
-            {
-                this.CurrentSize = this.MaxSize;
-            }
-            else if (size < this.InitialSize)
-            {
-                this.CurrentSize = this.InitialSize;
-            }
-            else
-            {
-                this.CurrentSize = size;
-            }
+            this.SelectedWargearUpgrades[weapon] = amount;
 
-            this.SetTotalCost();
+            this.SelectedWargearUpgrades[this.InitialWargear] =
+                this.CurrentSize - (from entry in this.SelectedWargearUpgrades
+                                    where entry.Key != this.InitialWargear
+                                    select entry.Value).Sum();
         }
 
         /// <summary>
@@ -176,8 +197,6 @@
             {
                 this.SelectedRuleUpgrades.Remove(upgradeKey);
             }
-
-            this.SetTotalCost();
         }
     }
 }

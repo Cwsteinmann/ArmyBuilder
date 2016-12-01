@@ -33,5 +33,6 @@
         private int MaxPoints { get; set; }
 
         private IEnumerable<Unit> Units { get; set; }
+
     }
 }

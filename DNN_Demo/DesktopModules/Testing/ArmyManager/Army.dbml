@@ -36,6 +36,7 @@
       <Column Name="ArmyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ArmyName" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
       <Column Name="MaxPoints" Type="System.Int32" CanBeNull="false" />
+      <Association Name="Engage_Army_Engage_Unit" Member="Units" ThisKey="ArmyID" OtherKey="ArmyId" Type="Engage_Unit" />
     </Type>
   </Table>
   <Table Name="dbo.Engage_Unit" Member="Engage_Units">
@@ -47,6 +48,7 @@
       <Column Name="Size" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Engage_Unit_Engage_Unit_Rule" Member="Engage_Unit_Rules" ThisKey="UnitId" OtherKey="UnitID" Type="Engage_Unit_Rule" />
       <Association Name="Engage_Unit_Engage_Unit_Wargear" Member="Engage_Unit_Wargears" ThisKey="UnitId" OtherKey="UnitID" Type="Engage_Unit_Wargear" />
+      <Association Name="Engage_Army_Engage_Unit" Member="Army" ThisKey="ArmyId" OtherKey="ArmyID" Type="Engage_Army" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

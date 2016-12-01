@@ -16,6 +16,8 @@ namespace Testing.Dnn.ArmyManager
         /// </summary>
         event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradeChecked;
 
+        event EventHandler<ButtonNewUnitEventArgs> ButtonNewUnitClicked;
+
         /// <summary>
         /// event for setting size of unit
         /// </summary>

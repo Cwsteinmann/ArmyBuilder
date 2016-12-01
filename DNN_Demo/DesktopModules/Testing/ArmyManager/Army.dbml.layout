@@ -66,5 +66,12 @@
         <classShapeMoniker Id="d13bd703-adfb-4c59-ada7-2fc11be6ecad" />
       </nodes>
     </associationConnector>
+    <associationConnector edgePoints="[(3.875 : 4.625); (3.875 : 3.80211707161458); (3.206675 : 3.80211707161458); (3.206675 : 3.81699527994792); (3.125 : 3.81699527994792)]" manuallyRouted="true" fixedFrom="Algorithm" fixedTo="Caller">
+      <AssociationMoniker Name="/ArmyDataContext/Engage_Army/Engage_Army_Engage_Unit" />
+      <nodes>
+        <classShapeMoniker Id="361799dd-e072-4a79-b143-31c17ca97129" />
+        <classShapeMoniker Id="d08cd093-50ce-4aad-8a3f-b13b0cc64d06" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

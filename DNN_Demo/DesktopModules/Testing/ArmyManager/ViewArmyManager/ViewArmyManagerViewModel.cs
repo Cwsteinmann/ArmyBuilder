@@ -11,6 +11,8 @@ namespace Testing.Dnn.ArmyManager
 
     using DotNetNuke.UI.WebControls;
 
+    using Testing.Dnn.ArmyManager.ArmyManager;
+
     using Army =Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager.Army;
     using Unit = Testing.Dnn.ArmyManager.ArmyManager.Unit;
 
@@ -47,6 +49,8 @@ namespace Testing.Dnn.ArmyManager
         /// The list of units that comprises the army
         /// </summary>
         public IEnumerable<UnitViewModel> Army = Enumerable.Empty<UnitViewModel>();
+
+        public IEnumerable<Unit> ListOfUnits = new List<Unit> { { new Termagant() }, };
 
         /// <summary>
         /// The max points for the army

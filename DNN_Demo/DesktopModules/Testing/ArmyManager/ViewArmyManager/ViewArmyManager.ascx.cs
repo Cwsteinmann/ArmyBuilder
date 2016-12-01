@@ -17,6 +17,8 @@ namespace Testing.Dnn.ArmyManager
     {
         public event EventHandler<ButtonNewArmyEventArgs> ButtonNewArmyClicked;
 
+        public event EventHandler<ButtonNewUnitEventArgs> ButtonNewUnitClicked;
+
         /// <summary>
         /// Rule Checked
         /// </summary>
@@ -54,6 +56,21 @@ namespace Testing.Dnn.ArmyManager
         {
             this.ButtonNewArmyClicked?.Invoke(this, new ButtonNewArmyEventArgs(this.NewArmyName.Text, int.Parse(this.NewArmyPointsLimit.Text)));
         }
+
+        protected void OnButtonAddNewUnitClicked(object sender, EventArgs e)
+        {
+            this.ButtonNewUnitClicked?.Invoke(this, new ButtonNewUnitEventArgs(this.NewUnitDDL.SelectedValue));
+        }
+    }
+
+    public class ButtonNewUnitEventArgs : EventArgs
+    {
+        public ButtonNewUnitEventArgs(string name)
+        {
+            this.UnitName = name;
+        }
+
+        public string UnitName;
     }
 
     /// <summary>
