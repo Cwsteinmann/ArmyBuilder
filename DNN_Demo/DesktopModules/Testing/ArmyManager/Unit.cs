@@ -5,85 +5,91 @@
 
     public class Unit
     {
-        /// <summary>
-        /// The type of the unit (Eg. Infantry, Beasts, etc)
-        /// </summary>
-        public string Type;
 
         /// <summary>
-        /// Unit title
+        /// Gets or sets the Unit ID to be set by the server
         /// </summary>
-        public string Name;
+        public int UnitID { get; set; }
 
         /// <summary>
-        /// Unit type (Eg. Troop, HQ, etc)
+        /// Gets or sets the type of the unit (Eg. Infantry, Beasts, etc)
         /// </summary>
-        public string UnitType;
+        public string Type { get; set; }
 
         /// <summary>
-        /// the initial points cost of the unit on initialization
+        /// Gets or sets the unit title
         /// </summary>
-        public int InitialPoints;
+        public string Name { get; set; }
 
         /// <summary>
-        /// the initial size of the unit on initialization
+        /// Gets or sets the Unit type (Eg. Troop, HQ, etc)
         /// </summary>
-        public int InitialSize;
+        public string UnitType { get; set; }
 
         /// <summary>
-        /// Maximum size the unit can be
+        /// Gets or sets the initial points cost of the unit on initialization
         /// </summary>
-        public int MaxSize;
+        public int InitialPoints { get; set; }
 
         /// <summary>
-        /// cost associated with each individual in the unit
+        /// Gets or sets the initial size of the unit on initialization
         /// </summary>
-        public int CostPerUnit;
+        public int InitialSize { get; set; }
 
         /// <summary>
-        /// List of the stats associated with the unit
+        /// Gets or sets the maximum size the unit can be
         /// </summary>
-        public Dictionary<string, int> Stats;
+        public int MaxSize { get; set; }
 
         /// <summary>
-        /// List of special rules the unit has on initialization
+        /// Gets or sets cost associated with each individual in the unit
         /// </summary>
-        public List<string> SpecialRules;
+        public int CostPerUnit { get; set; }
 
         /// <summary>
-        /// List of wargear the unit has on initialization
+        /// Gets or sets list of the stats associated with the unit
         /// </summary>
-        public string InitialWargear;
+        public Dictionary<string, int> Stats { get; set; }
 
         /// <summary>
-        /// Potential wargear upgrades the unit has access to, in Name / Cost per Individual format
+        /// Gets or sets list of special rules the unit has on initialization
         /// </summary>
-        public Dictionary<string, int> WargearUpgrades;
+        public List<string> SpecialRules { get; set; }
 
         /// <summary>
-        /// Rules upgrades the unit has access to, in Name / Cost per individual format
+        /// Gets or sets list of wargear the unit has on initialization
         /// </summary>
-        public Dictionary<string, int> RulesUpgrades;
+        public string InitialWargear { get; set; }
 
         /// <summary>
-        /// the current size of the unit
+        /// Gets or sets potential wargear upgrades the unit has access to, in Name / Cost per Individual format
         /// </summary>
-        public int CurrentSize;
+        public Dictionary<string, int> WargearUpgrades { get; set; }
 
         /// <summary>
-        /// List of the upgrades that have actually been selected
+        /// Gets or sets the rules upgrades the unit has access to, in Name / Cost per individual format
         /// </summary>
-        public List<string> SelectedRuleUpgrades;
+        public Dictionary<string, int> RulesUpgrades { get; set; }
 
         /// <summary>
-        /// list of wargear upgrades selected, in wargear / amount format
+        /// Gets or sets the current size of the unit
         /// </summary>
-        public Dictionary<string, int> SelectedWargearUpgrades;
+        public int CurrentSize { get; set; }
 
         /// <summary>
-        /// total calculated cost of the unit
+        /// Gets or sets the list of the upgrades that have actually been selected
         /// </summary>
-        public int TotalCost;
+        public List<string> SelectedRuleUpgrades { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of wargear upgrades selected, in wargear / amount format
+        /// </summary>
+        public Dictionary<string, int> SelectedWargearUpgrades { get; set; }
+
+        /// <summary>
+        /// Gets or sets total calculated cost of the unit
+        /// </summary>
+        public int TotalCost { get; set; }
 
         /// <summary>
         /// calculate total cost of the unit - by size, selected wargear upgrades, and selected rule upgrades
@@ -143,6 +149,7 @@
             {
                 this.CurrentSize = size;
             }
+
             this.SetTotalCost();
         }
 

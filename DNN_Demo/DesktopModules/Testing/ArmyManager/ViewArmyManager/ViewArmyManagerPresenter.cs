@@ -8,9 +8,14 @@ namespace Testing.Dnn.ArmyManager
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Runtime.Remoting.Contexts;
 
     using DotNetNuke.Services.Localization;
+    using DotNetNuke.UI.WebControls;
     using DotNetNuke.Web.Mvp;
+
+    using Engage.Dnn.Framework.EngageLicensing;
+    using Engage.Util;
 
     using Testing.Dnn.ArmyManager.ArmyManager;
 
@@ -25,8 +30,9 @@ namespace Testing.Dnn.ArmyManager
             : base(view)
         {
             this.View.Initialize += this.View_Initialize;
-            this.View.RoleUpgradeChecked += this.View_RoleUpgradeChecked;
+            this.View.RuleUpgradeChecked += this.View_RoleUpgradeChecked;
             this.View.ButtonSubmitClicked += this.View_ButtonSubmitClicked;
+            this.View.ButtonNewArmyClicked += this.MakeArmy;
         }
 
         /// <summary>Handles the <see cref="IModuleViewBase.Initialize"/> event of the <see cref="Presenter{TView}.View"/>.</summary>
@@ -68,6 +74,24 @@ namespace Testing.Dnn.ArmyManager
             catch (Exception exc)
             {
                 this.ProcessModuleLoadException(exc);
+            }
+        }
+
+        private void MakeArmy(object sender, ButtonNewArmyEventArgs e)
+        {
+            using (var context = new ArmyDataContext())
+            {
+                var newArmy = new Engage_Army();
+                newArmy.ArmyName = e.ArmyName;
+                newArmy.MaxPoints = e.Points;
+
+                context.Engage_Armies.InsertOnSubmit(newArmy);
+                context.SubmitChanges();
+                //this.View.Model = new ViewArmyManagerViewModel(newArmy.MaxPoints, newArmy.ArmyName, newArmy.ArmyID);
+                this.View.Model.MaxPoints = newArmy.MaxPoints;
+                this.View.Model.Name = newArmy.ArmyName;
+                this.View.Model.ArmyID = newArmy.ArmyID;
+                this.View.Model.IsLoading = true;
             }
         }
     }

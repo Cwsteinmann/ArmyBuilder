@@ -14,12 +14,17 @@ namespace Testing.Dnn.ArmyManager
         /// <summary>
         /// Event for setting rule upgrades
         /// </summary>
-        event EventHandler<RuleUpgradeCheckedEventArgs> RoleUpgradeChecked;
+        event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradeChecked;
 
         /// <summary>
         /// event for setting size of unit
         /// </summary>
         event EventHandler<ButtonSubmitSizeEventArgs> ButtonSubmitClicked;
+
+        /// <summary>
+        /// event for creating a new army
+        /// </summary>
+        event EventHandler<ButtonNewArmyEventArgs> ButtonNewArmyClicked;
     }
 
 }

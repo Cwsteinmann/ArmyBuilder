@@ -9,7 +9,8 @@ IF OBJECT_ID(N'[dbo].[Engage_Army]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[Engage_Army] (
 		ArmyID int NOT NULL IDENTITY(1,1) CONSTRAINT [PK_Engage_Army] PRIMARY KEY,
-		ArmyName nvarchar(60) NOT NULL
+		ArmyName nvarchar(60) NOT NULL,
+		MaxPoints int NOT NULL
 	);
 END
 GO

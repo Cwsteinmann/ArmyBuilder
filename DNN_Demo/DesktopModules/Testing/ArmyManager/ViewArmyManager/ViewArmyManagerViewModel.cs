@@ -9,13 +9,59 @@ namespace Testing.Dnn.ArmyManager
     using System.Linq;
     using System.Web.UI.WebControls;
 
+    using DotNetNuke.UI.WebControls;
+
+    using Army =Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager.Army;
     using Unit = Testing.Dnn.ArmyManager.ArmyManager.Unit;
 
     /// <summary>The view model for the Army Manager, to be displayed by <see cref="IViewArmyManagerView"/></summary>
     public class ViewArmyManagerViewModel
     {
+        /// <summary>Initializes a new instance of the <see cref="ViewArmyManagerViewModel"/> class.</summary>
+        public ViewArmyManagerViewModel()
+        {
+            this.IsLoading = false;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel"/> class.
+        /// ViewArmyManagerViewModel Constructor
+        /// </summary>
+        /// <param name="points">Max points cost for the army</param>
+        /// <param name="name">Name of the army</param>
+        /// <param name="id">The army ID determined by the server</param>
+        public ViewArmyManagerViewModel(int points, string name, int id)
+        {
+            this.MaxPoints = points;
+            this.Name = name;
+            this.ArmyID = id;
+        }
+
+        /// <summary>Flag for if the user is loading an existing army</summary>
+        public bool IsLoading;
+
         /// <summary>Gets or sets the unit to display.</summary>
         public UnitViewModel DisplayUnit { get; set; }
+
+        /// <summary>
+        /// The list of units that comprises the army
+        /// </summary>
+        public IEnumerable<UnitViewModel> Army = Enumerable.Empty<UnitViewModel>();
+
+        /// <summary>
+        /// The max points for the army
+        /// </summary>
+        public int MaxPoints;
+
+        /// <summary>
+        /// The user-determined name of the army
+        /// </summary>
+        public string Name;
+
+        /// <summary>
+        /// The server-determined army ID
+        /// </summary>
+        public int ArmyID;
 
         /// <summary>
         /// View Model on a Unit level
@@ -29,7 +75,6 @@ namespace Testing.Dnn.ArmyManager
             /// <param name="unit">an instance of the <see cref="Unit" /> class. </param>
             public UnitViewModel(Unit unit)
             {
-
                 this.Wargear = from wargear in unit.WargearUpgrades
                                join selectedWargear in unit.SelectedWargearUpgrades on wargear.Key equals selectedWargear.Key
                                select new WarGearViewModel(selectedWargear.Value, wargear.Key, wargear.Value);
@@ -91,27 +136,27 @@ namespace Testing.Dnn.ArmyManager
             }
 
             /// <summary>
-            /// Get the stats of the unit
+            /// Gets the stats of the unit
             /// </summary>
             public Dictionary<string, int> Stats { get; private set; }
 
             /// <summary>
-            /// Get the name of the unit
+            /// Gets the name of the unit
             /// </summary>
             public string Name { get; private set; }
 
             /// <summary>
-            /// Get the type of the unit
+            /// Gets the type of the unit
             /// </summary>
             public string Type { get; private set; }
 
             /// <summary>
-            /// Get the slot type of the unit
+            /// Gets the slot type of the unit
             /// </summary>
             public string SlotType { get; private set; }
 
             /// <summary>
-            /// Get the total cost of the unit
+            /// Gets the total cost of the unit
             /// </summary>
             public int Cost { get; private set; }
         }

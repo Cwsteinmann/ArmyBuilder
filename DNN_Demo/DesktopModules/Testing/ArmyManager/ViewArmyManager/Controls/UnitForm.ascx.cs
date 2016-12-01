@@ -41,7 +41,7 @@ namespace Testing.Dnn.ArmyManager
         protected void RuleUpgradesCheckBoxList_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedValues = this.RuleUpgradesCheckBoxList.Items.Cast<ListItem>().Where(li => li.Selected).Select(li => li.Value);
-            this.RuleUpgradeChecked?.Invoke(this, new RuleUpgradeCheckedEventArgs(selectedValues));
+           // this.RuleUpgradeChecked?.Invoke(this, new RuleUpgradeCheckedEventArgs(this.DisplayUnit, selectedValues));
         }
 
         /// <summary>Handles the OnDataBound event of the RuleUpgradesCheckBoxList control.</summary>
@@ -64,14 +64,18 @@ namespace Testing.Dnn.ArmyManager
     public class RuleUpgradeCheckedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RuleUpgradeCheckedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="RuleUpgradeCheckedEventArgs" /> class.
         /// Set selected values of Rules
         /// </summary>
-        /// <param name="selectedValues" >the selected values</param>
-        public RuleUpgradeCheckedEventArgs(IEnumerable<string> selectedValues)
+        /// <param name="unitId">The unit identifier.</param>
+        /// <param name="selectedValues">the selected values</param>
+        public RuleUpgradeCheckedEventArgs(int unitId, IEnumerable<string> selectedValues)
         {
+            this.UnitId = unitId;
             this.SelectedValues = selectedValues;
         }
+
+        public int UnitId { get; private set; }
 
         /// <summary>
         /// 

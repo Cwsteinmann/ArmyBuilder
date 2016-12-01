@@ -30,24 +30,24 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertEngage_Army(Engage_Army instance);
-    partial void UpdateEngage_Army(Engage_Army instance);
-    partial void DeleteEngage_Army(Engage_Army instance);
     partial void InsertEngage_WargearUpgrade(Engage_WargearUpgrade instance);
     partial void UpdateEngage_WargearUpgrade(Engage_WargearUpgrade instance);
     partial void DeleteEngage_WargearUpgrade(Engage_WargearUpgrade instance);
     partial void InsertEngage_RulesUpgrade(Engage_RulesUpgrade instance);
     partial void UpdateEngage_RulesUpgrade(Engage_RulesUpgrade instance);
     partial void DeleteEngage_RulesUpgrade(Engage_RulesUpgrade instance);
-    partial void InsertEngage_Unit(Engage_Unit instance);
-    partial void UpdateEngage_Unit(Engage_Unit instance);
-    partial void DeleteEngage_Unit(Engage_Unit instance);
     partial void InsertEngage_Unit_Rule(Engage_Unit_Rule instance);
     partial void UpdateEngage_Unit_Rule(Engage_Unit_Rule instance);
     partial void DeleteEngage_Unit_Rule(Engage_Unit_Rule instance);
     partial void InsertEngage_Unit_Wargear(Engage_Unit_Wargear instance);
     partial void UpdateEngage_Unit_Wargear(Engage_Unit_Wargear instance);
     partial void DeleteEngage_Unit_Wargear(Engage_Unit_Wargear instance);
+    partial void InsertEngage_Army(Engage_Army instance);
+    partial void UpdateEngage_Army(Engage_Army instance);
+    partial void DeleteEngage_Army(Engage_Army instance);
+    partial void InsertEngage_Unit(Engage_Unit instance);
+    partial void UpdateEngage_Unit(Engage_Unit instance);
+    partial void DeleteEngage_Unit(Engage_Unit instance);
     #endregion
 		
 		public ArmyDataContext() : 
@@ -80,14 +80,6 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Engage_Army> Engage_Armies
-		{
-			get
-			{
-				return this.GetTable<Engage_Army>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Engage_WargearUpgrade> Engage_WargearUpgrades
 		{
 			get
@@ -101,14 +93,6 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			get
 			{
 				return this.GetTable<Engage_RulesUpgrade>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Engage_Unit> Engage_Units
-		{
-			get
-			{
-				return this.GetTable<Engage_Unit>();
 			}
 		}
 		
@@ -127,90 +111,20 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 				return this.GetTable<Engage_Unit_Wargear>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Engage_Army")]
-	public partial class Engage_Army : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ArmyID;
-		
-		private string _ArmyName;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnArmyIDChanging(int value);
-    partial void OnArmyIDChanged();
-    partial void OnArmyNameChanging(string value);
-    partial void OnArmyNameChanged();
-    #endregion
-		
-		public Engage_Army()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ArmyID
+		public System.Data.Linq.Table<Engage_Army> Engage_Armies
 		{
 			get
 			{
-				return this._ArmyID;
-			}
-			set
-			{
-				if ((this._ArmyID != value))
-				{
-					this.OnArmyIDChanging(value);
-					this.SendPropertyChanging();
-					this._ArmyID = value;
-					this.SendPropertyChanged("ArmyID");
-					this.OnArmyIDChanged();
-				}
+				return this.GetTable<Engage_Army>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyName", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
-		public string ArmyName
+		public System.Data.Linq.Table<Engage_Unit> Engage_Units
 		{
 			get
 			{
-				return this._ArmyName;
-			}
-			set
-			{
-				if ((this._ArmyName != value))
-				{
-					this.OnArmyNameChanging(value);
-					this.SendPropertyChanging();
-					this._ArmyName = value;
-					this.SendPropertyChanged("ArmyName");
-					this.OnArmyNameChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<Engage_Unit>();
 			}
 		}
 	}
@@ -440,220 +354,6 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 		{
 			this.SendPropertyChanging();
 			entity.Engage_RulesUpgrade = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Engage_Unit")]
-	public partial class Engage_Unit : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UnitId;
-		
-		private int _ArmyId;
-		
-		private int _UnitType;
-		
-		private System.Nullable<int> _Squad;
-		
-		private int _Size;
-		
-		private EntitySet<Engage_Unit_Rule> _Engage_Unit_Rules;
-		
-		private EntitySet<Engage_Unit_Wargear> _Engage_Unit_Wargears;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnUnitIdChanging(int value);
-    partial void OnUnitIdChanged();
-    partial void OnArmyIdChanging(int value);
-    partial void OnArmyIdChanged();
-    partial void OnUnitTypeChanging(int value);
-    partial void OnUnitTypeChanged();
-    partial void OnSquadChanging(System.Nullable<int> value);
-    partial void OnSquadChanged();
-    partial void OnSizeChanging(int value);
-    partial void OnSizeChanged();
-    #endregion
-		
-		public Engage_Unit()
-		{
-			this._Engage_Unit_Rules = new EntitySet<Engage_Unit_Rule>(new Action<Engage_Unit_Rule>(this.attach_Engage_Unit_Rules), new Action<Engage_Unit_Rule>(this.detach_Engage_Unit_Rules));
-			this._Engage_Unit_Wargears = new EntitySet<Engage_Unit_Wargear>(new Action<Engage_Unit_Wargear>(this.attach_Engage_Unit_Wargears), new Action<Engage_Unit_Wargear>(this.detach_Engage_Unit_Wargears));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int UnitId
-		{
-			get
-			{
-				return this._UnitId;
-			}
-			set
-			{
-				if ((this._UnitId != value))
-				{
-					this.OnUnitIdChanging(value);
-					this.SendPropertyChanging();
-					this._UnitId = value;
-					this.SendPropertyChanged("UnitId");
-					this.OnUnitIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyId", DbType="Int NOT NULL")]
-		public int ArmyId
-		{
-			get
-			{
-				return this._ArmyId;
-			}
-			set
-			{
-				if ((this._ArmyId != value))
-				{
-					this.OnArmyIdChanging(value);
-					this.SendPropertyChanging();
-					this._ArmyId = value;
-					this.SendPropertyChanged("ArmyId");
-					this.OnArmyIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitType", DbType="Int NOT NULL")]
-		public int UnitType
-		{
-			get
-			{
-				return this._UnitType;
-			}
-			set
-			{
-				if ((this._UnitType != value))
-				{
-					this.OnUnitTypeChanging(value);
-					this.SendPropertyChanging();
-					this._UnitType = value;
-					this.SendPropertyChanged("UnitType");
-					this.OnUnitTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Squad", DbType="Int")]
-		public System.Nullable<int> Squad
-		{
-			get
-			{
-				return this._Squad;
-			}
-			set
-			{
-				if ((this._Squad != value))
-				{
-					this.OnSquadChanging(value);
-					this.SendPropertyChanging();
-					this._Squad = value;
-					this.SendPropertyChanged("Squad");
-					this.OnSquadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size", DbType="Int NOT NULL")]
-		public int Size
-		{
-			get
-			{
-				return this._Size;
-			}
-			set
-			{
-				if ((this._Size != value))
-				{
-					this.OnSizeChanging(value);
-					this.SendPropertyChanging();
-					this._Size = value;
-					this.SendPropertyChanged("Size");
-					this.OnSizeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Unit_Engage_Unit_Rule", Storage="_Engage_Unit_Rules", ThisKey="UnitId", OtherKey="UnitID")]
-		public EntitySet<Engage_Unit_Rule> Engage_Unit_Rules
-		{
-			get
-			{
-				return this._Engage_Unit_Rules;
-			}
-			set
-			{
-				this._Engage_Unit_Rules.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Unit_Engage_Unit_Wargear", Storage="_Engage_Unit_Wargears", ThisKey="UnitId", OtherKey="UnitID")]
-		public EntitySet<Engage_Unit_Wargear> Engage_Unit_Wargears
-		{
-			get
-			{
-				return this._Engage_Unit_Wargears;
-			}
-			set
-			{
-				this._Engage_Unit_Wargears.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Engage_Unit_Rules(Engage_Unit_Rule entity)
-		{
-			this.SendPropertyChanging();
-			entity.Engage_Unit = this;
-		}
-		
-		private void detach_Engage_Unit_Rules(Engage_Unit_Rule entity)
-		{
-			this.SendPropertyChanging();
-			entity.Engage_Unit = null;
-		}
-		
-		private void attach_Engage_Unit_Wargears(Engage_Unit_Wargear entity)
-		{
-			this.SendPropertyChanging();
-			entity.Engage_Unit = this;
-		}
-		
-		private void detach_Engage_Unit_Wargears(Engage_Unit_Wargear entity)
-		{
-			this.SendPropertyChanging();
-			entity.Engage_Unit = null;
 		}
 	}
 	
@@ -1014,6 +714,330 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Engage_Army")]
+	public partial class Engage_Army : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ArmyID;
+		
+		private string _ArmyName;
+		
+		private int _MaxPoints;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnArmyIDChanging(int value);
+    partial void OnArmyIDChanged();
+    partial void OnArmyNameChanging(string value);
+    partial void OnArmyNameChanged();
+    partial void OnMaxPointsChanging(int value);
+    partial void OnMaxPointsChanged();
+    #endregion
+		
+		public Engage_Army()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ArmyID
+		{
+			get
+			{
+				return this._ArmyID;
+			}
+			set
+			{
+				if ((this._ArmyID != value))
+				{
+					this.OnArmyIDChanging(value);
+					this.SendPropertyChanging();
+					this._ArmyID = value;
+					this.SendPropertyChanged("ArmyID");
+					this.OnArmyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyName", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
+		public string ArmyName
+		{
+			get
+			{
+				return this._ArmyName;
+			}
+			set
+			{
+				if ((this._ArmyName != value))
+				{
+					this.OnArmyNameChanging(value);
+					this.SendPropertyChanging();
+					this._ArmyName = value;
+					this.SendPropertyChanged("ArmyName");
+					this.OnArmyNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaxPoints")]
+		public int MaxPoints
+		{
+			get
+			{
+				return this._MaxPoints;
+			}
+			set
+			{
+				if ((this._MaxPoints != value))
+				{
+					this.OnMaxPointsChanging(value);
+					this.SendPropertyChanging();
+					this._MaxPoints = value;
+					this.SendPropertyChanged("MaxPoints");
+					this.OnMaxPointsChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Engage_Unit")]
+	public partial class Engage_Unit : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _UnitId;
+		
+		private int _ArmyId;
+		
+		private int _UnitType;
+		
+		private System.Nullable<int> _Squad;
+		
+		private int _Size;
+		
+		private EntitySet<Engage_Unit_Rule> _Engage_Unit_Rules;
+		
+		private EntitySet<Engage_Unit_Wargear> _Engage_Unit_Wargears;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUnitIdChanging(int value);
+    partial void OnUnitIdChanged();
+    partial void OnArmyIdChanging(int value);
+    partial void OnArmyIdChanged();
+    partial void OnUnitTypeChanging(int value);
+    partial void OnUnitTypeChanged();
+    partial void OnSquadChanging(System.Nullable<int> value);
+    partial void OnSquadChanged();
+    partial void OnSizeChanging(int value);
+    partial void OnSizeChanged();
+    #endregion
+		
+		public Engage_Unit()
+		{
+			this._Engage_Unit_Rules = new EntitySet<Engage_Unit_Rule>(new Action<Engage_Unit_Rule>(this.attach_Engage_Unit_Rules), new Action<Engage_Unit_Rule>(this.detach_Engage_Unit_Rules));
+			this._Engage_Unit_Wargears = new EntitySet<Engage_Unit_Wargear>(new Action<Engage_Unit_Wargear>(this.attach_Engage_Unit_Wargears), new Action<Engage_Unit_Wargear>(this.detach_Engage_Unit_Wargears));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UnitId
+		{
+			get
+			{
+				return this._UnitId;
+			}
+			set
+			{
+				if ((this._UnitId != value))
+				{
+					this.OnUnitIdChanging(value);
+					this.SendPropertyChanging();
+					this._UnitId = value;
+					this.SendPropertyChanged("UnitId");
+					this.OnUnitIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArmyId", DbType="Int NOT NULL")]
+		public int ArmyId
+		{
+			get
+			{
+				return this._ArmyId;
+			}
+			set
+			{
+				if ((this._ArmyId != value))
+				{
+					this.OnArmyIdChanging(value);
+					this.SendPropertyChanging();
+					this._ArmyId = value;
+					this.SendPropertyChanged("ArmyId");
+					this.OnArmyIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitType", DbType="Int NOT NULL")]
+		public int UnitType
+		{
+			get
+			{
+				return this._UnitType;
+			}
+			set
+			{
+				if ((this._UnitType != value))
+				{
+					this.OnUnitTypeChanging(value);
+					this.SendPropertyChanging();
+					this._UnitType = value;
+					this.SendPropertyChanged("UnitType");
+					this.OnUnitTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Squad", DbType="Int")]
+		public System.Nullable<int> Squad
+		{
+			get
+			{
+				return this._Squad;
+			}
+			set
+			{
+				if ((this._Squad != value))
+				{
+					this.OnSquadChanging(value);
+					this.SendPropertyChanging();
+					this._Squad = value;
+					this.SendPropertyChanged("Squad");
+					this.OnSquadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size", DbType="Int NOT NULL")]
+		public int Size
+		{
+			get
+			{
+				return this._Size;
+			}
+			set
+			{
+				if ((this._Size != value))
+				{
+					this.OnSizeChanging(value);
+					this.SendPropertyChanging();
+					this._Size = value;
+					this.SendPropertyChanged("Size");
+					this.OnSizeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Unit_Engage_Unit_Rule", Storage="_Engage_Unit_Rules", ThisKey="UnitId", OtherKey="UnitID")]
+		public EntitySet<Engage_Unit_Rule> Engage_Unit_Rules
+		{
+			get
+			{
+				return this._Engage_Unit_Rules;
+			}
+			set
+			{
+				this._Engage_Unit_Rules.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Engage_Unit_Engage_Unit_Wargear", Storage="_Engage_Unit_Wargears", ThisKey="UnitId", OtherKey="UnitID")]
+		public EntitySet<Engage_Unit_Wargear> Engage_Unit_Wargears
+		{
+			get
+			{
+				return this._Engage_Unit_Wargears;
+			}
+			set
+			{
+				this._Engage_Unit_Wargears.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Engage_Unit_Rules(Engage_Unit_Rule entity)
+		{
+			this.SendPropertyChanging();
+			entity.Engage_Unit = this;
+		}
+		
+		private void detach_Engage_Unit_Rules(Engage_Unit_Rule entity)
+		{
+			this.SendPropertyChanging();
+			entity.Engage_Unit = null;
+		}
+		
+		private void attach_Engage_Unit_Wargears(Engage_Unit_Wargear entity)
+		{
+			this.SendPropertyChanging();
+			entity.Engage_Unit = this;
+		}
+		
+		private void detach_Engage_Unit_Wargears(Engage_Unit_Wargear entity)
+		{
+			this.SendPropertyChanging();
+			entity.Engage_Unit = null;
 		}
 	}
 }
