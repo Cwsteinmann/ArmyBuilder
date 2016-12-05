@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 9.25" name="Army">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Army">
   <DataContextMoniker Name="/ArmyDataContext" />
   <nestedChildShapes>
     <classShape Id="ba62b0d2-4875-4ec4-b879-ed270f9b5627" absoluteBounds="0.75, 6.25, 2, 1.1939925130208344">
@@ -8,10 +8,10 @@
         <elementListCompartment Id="766ce3b6-907f-4fa8-9e74-cbfd2512b162" absoluteBounds="0.765, 6.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="fd601451-d48a-4d4a-9dc6-d114e2c2f454" absoluteBounds="0.75, 7.75, 2, 1.1939925130208344">
+    <classShape Id="fd601451-d48a-4d4a-9dc6-d114e2c2f454" absoluteBounds="5.125, 4.5, 2, 1.1939925130208344">
       <DataClassMoniker Name="/ArmyDataContext/Engage_RulesUpgrade" />
       <nestedChildShapes>
-        <elementListCompartment Id="4d68e1f3-e737-4bb0-843c-6958d6bd4b05" absoluteBounds="0.765, 8.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4d68e1f3-e737-4bb0-843c-6958d6bd4b05" absoluteBounds="5.14, 4.9600000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="7953ecf0-8d6c-4f0b-9fd0-0f03aa2b2704" absoluteBounds="4.625, 2.75, 2, 1.1939925130208335">
@@ -26,7 +26,7 @@
         <elementListCompartment Id="1fc7fa6a-e411-4e6b-bc31-c09fec909c84" absoluteBounds="3.515, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 8.34699625651042); (5.65625 : 8.34699625651042); (5.65625 : 3.94399251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.875 : 4.5); (5.875 : 3.94399251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ArmyDataContext/Engage_RulesUpgrade/Engage_RulesUpgrade_Engage_Unit_Rule" />
       <nodes>
         <classShapeMoniker Id="fd601451-d48a-4d4a-9dc6-d114e2c2f454" />
@@ -66,7 +66,7 @@
         <classShapeMoniker Id="d13bd703-adfb-4c59-ada7-2fc11be6ecad" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.875 : 4.625); (3.875 : 3.80211707161458); (3.206675 : 3.80211707161458); (3.206675 : 3.81699527994792); (3.125 : 3.81699527994792)]" manuallyRouted="true" fixedFrom="Algorithm" fixedTo="Caller">
+    <associationConnector edgePoints="[(3.875 : 4.625); (3.875 : 3.80211707161458); (3.206675 : 3.80211707161458); (3.206675 : 3.81699527994792); (3.125 : 3.81699527994792)]" manuallyRouted="true" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ArmyDataContext/Engage_Army/Engage_Army_Engage_Unit" />
       <nodes>
         <classShapeMoniker Id="361799dd-e072-4a79-b143-31c17ca97129" />

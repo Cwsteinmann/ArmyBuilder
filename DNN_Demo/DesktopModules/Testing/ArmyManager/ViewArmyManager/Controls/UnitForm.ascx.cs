@@ -19,29 +19,70 @@ namespace Testing.Dnn.ArmyManager
     /// </summary>
     public partial class UnitForm : UserControl
     {
-        /// <summary>
-        /// Get checked Rule Upgrades
-        /// </summary>
-        public event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradeChecked;
+        private ViewArmyManagerViewModel.UnitViewModel displayUnit;
 
+
+        public event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradesSelectedIndexChanged;
         /// <summary>
         /// Get size button clicked
         /// </summary>
-        public event EventHandler<ButtonSubmitSizeEventArgs> SizeButtonClicked;
+        public event EventHandler<ButtonSetSizeEventArgs> ButtonSetSizeClicked;
+
+        public event EventHandler<ButtonDeleteUnitEventArgs> ButtonDeleteUnitClicked;
+
+        public event EventHandler<ButtonWargearEventArgs> ButtonWargearClicked;
 
         /// <summary>
         /// Display Unit creation
         /// </summary>
-        public ViewArmyManagerViewModel.UnitViewModel DisplayUnit { get; set; }
-        
-        
+        public ViewArmyManagerViewModel.UnitViewModel DisplayUnit
+        {
+            get
+            {
+                return this.displayUnit;
+            }
+
+            set
+            {
+                this.displayUnit = value;
+            }
+        }
+
         /// <summary>Handles the OnSelectedIndexChanged event of the RuleUpgradesCheckBoxList control.</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void RuleUpgradesCheckBoxList_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedValues = this.RuleUpgradesCheckBoxList.Items.Cast<ListItem>().Where(li => li.Selected).Select(li => li.Value);
-           // this.RuleUpgradeChecked?.Invoke(this, new RuleUpgradeCheckedEventArgs(this.DisplayUnit, selectedValues));
+            var unitId = int.Parse(this.UnitIdHiddenField.Value);
+            this.RuleUpgradesSelectedIndexChanged?.Invoke(this, new RuleUpgradeCheckedEventArgs(unitId, selectedValues));
+        }
+
+        protected void ButtonSetSize_Click(object sender, EventArgs e)
+        {
+            var currentSize = int.Parse(this.SizeInput.Text);
+            var unitId = int.Parse(this.UnitIdHiddenField.Value);
+            this.ButtonSetSizeClicked?.Invoke(this, new ButtonSetSizeEventArgs(currentSize, unitId));
+        }
+
+        protected void ButtonDeleteUnit_Click(object sender, EventArgs e)
+        {
+            var unitId = int.Parse(this.UnitIdHiddenField.Value);
+            this.ButtonDeleteUnitClicked?.Invoke(this, new ButtonDeleteUnitEventArgs(unitId));
+        }
+
+        protected void ButtonWargear_Click(object sender, EventArgs e)
+        {
+            var wargearDict = (from RepeaterItem item in this.WargearRepeater.Items
+                               let textbox = (TextBox)item.FindControl("WargearInput")
+                               let wargearName = (HiddenField)item.FindControl("WargearHiddenField")
+                               select new { wargearName.Value, textbox.Text, })
+                               .ToDictionary(unknown => unknown.Value, unknown => int.Parse(unknown.Text));
+
+            var unitID = int.Parse(this.UnitIdHiddenField.Value);
+
+            this.ButtonWargearClicked?.Invoke(this, new ButtonWargearEventArgs(wargearDict, unitID));
+
         }
 
         /// <summary>Handles the OnDataBound event of the RuleUpgradesCheckBoxList control.</summary>
@@ -56,6 +97,16 @@ namespace Testing.Dnn.ArmyManager
                 x.item.Selected = x.IsSelected;
             }
         }
+    }
+
+    public class ButtonDeleteUnitEventArgs : EventArgs
+    {
+        public ButtonDeleteUnitEventArgs(int unitID)
+        {
+            this.UnitId = unitID;
+        }
+
+        public int UnitId { get; set; }
     }
 
     /// <summary>
@@ -86,13 +137,29 @@ namespace Testing.Dnn.ArmyManager
     /// <summary>
     /// Unit Size Button Handler
     /// </summary>
-    public class ButtonSubmitSizeEventArgs : EventArgs
+    public class ButtonSetSizeEventArgs : EventArgs
     {
-        public ButtonSubmitSizeEventArgs(int amount)
+        public ButtonSetSizeEventArgs(int size, int unitID)
         {
-            this.Amount = amount;
+            this.Size = size;
+            this.UnitID = unitID;
         }
 
-        public int Amount { get; private set; }
+        public int Size { get; private set; }
+
+        public int UnitID { get; private set; }
+    }
+
+    public class ButtonWargearEventArgs : EventArgs
+    {
+        public ButtonWargearEventArgs(Dictionary<string, int> wargear, int unitID)
+        {
+            this.Wargear = wargear;
+            this.UnitID = unitID;
+        }
+
+        public Dictionary<string, int> Wargear;
+
+        public int UnitID { get; private set; }
     }
 }

@@ -42,15 +42,14 @@ namespace Testing.Dnn.ArmyManager
         /// <summary>Flag for if the user is loading an existing army</summary>
         public bool IsLoading;
 
-        /// <summary>Gets or sets the unit to display.</summary>
-        public UnitViewModel DisplayUnit { get; set; }
-
         /// <summary>
         /// The list of units that comprises the army
         /// </summary>
         public IEnumerable<UnitViewModel> Army = Enumerable.Empty<UnitViewModel>();
 
         public IEnumerable<Unit> ListOfUnits = new List<Unit> { { new Termagant() }, };
+
+        public Dictionary<int, string> ArmiesToLoad { get; set; }
 
         /// <summary>
         /// The max points for the army
@@ -88,10 +87,17 @@ namespace Testing.Dnn.ArmyManager
 
                 this.Rules = from rules in unit.SpecialRules select new InitialRulesViewModel(rules);
 
+                this.Unit = unit;
+
                 this.SizeData = new SizeDataViewModel(unit.InitialSize, unit.MaxSize, unit.CurrentSize, unit.CostPerUnit);
 
-                this.UnitData = new UnitDataViewModel(unit.Stats, unit.Name, unit.Type, unit.UnitType, unit.TotalCost);
+                this.UnitData = new UnitDataViewModel(unit.Stats, unit.Name, unit.Type, unit.UnitType, unit.TotalCost, unit.UnitID);
             }
+
+            /// <summary>
+            /// Gets the unit for the prupose of updating data
+            /// </summary>
+            public Unit Unit { get; private set; }
 
             /// <summary>
             /// Gets the unit data associated with the unit
@@ -130,14 +136,20 @@ namespace Testing.Dnn.ArmyManager
             /// <param name="type">The type of the unit</param>
             /// <param name="slotType">The type in the overall army the unit belongs to</param>
             /// <param name="cost">The overall cost of the unit</param>
-            public UnitDataViewModel(Dictionary<string, int> stats, string name, string type, string slotType, int cost)
+            public UnitDataViewModel(Dictionary<string, int> stats, string name, string type, string slotType, int cost, int unitID)
             {
                 this.Stats = stats;
                 this.Name = name;
                 this.Type = type;
                 this.SlotType = slotType;
                 this.Cost = cost;
+                this.UnitID = unitID;
             }
+
+            /// <summary>
+            /// Gets the server-made id of the unit
+            /// </summary>
+            public int UnitID { get; private set; }
 
             /// <summary>
             /// Gets the stats of the unit

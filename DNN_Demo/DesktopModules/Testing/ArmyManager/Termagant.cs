@@ -44,7 +44,7 @@
                 { "Devourer", 4 },
                 { "Spinefists", 0 },
                 { "Spike Rifle", 0 },
-                { "StrangleWeb", 5 },
+                { "Strangleweb", 5 },
             };
 
             this.RulesUpgrades = new Dictionary<string, int> { { "Adrenal Glands", 2 }, { "Toxin Sacs", 2 } };
@@ -59,7 +59,7 @@
                 { "Devourer", 0 },
                 { "Spinefists", 0 },
                 { "Spike Rifle", 0 },
-                { "StrangleWeb", 0 },
+                { "Strangleweb", 0 },
             };
     }
 

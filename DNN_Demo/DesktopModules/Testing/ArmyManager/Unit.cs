@@ -168,6 +168,11 @@
         {
             this.SelectedWargearUpgrades[weapon] = amount;
 
+            this.UpdateWargear();
+        }
+
+        public void UpdateWargear()
+        {
             this.SelectedWargearUpgrades[this.InitialWargear] =
                 this.CurrentSize - (from entry in this.SelectedWargearUpgrades
                                     where entry.Key != this.InitialWargear
@@ -180,14 +185,7 @@
         /// <param name="upgradeKey">Key associated with an upgrade</param>
         public void SetUpgrade(string upgradeKey)
         {
-            var adding = true;
-            foreach (var key in this.SelectedRuleUpgrades)
-            {
-                if (key == upgradeKey)
-                {
-                    adding = false;
-                }
-            }
+            var adding = !this.SelectedRuleUpgrades.Contains(upgradeKey);
 
             if (adding)
             {

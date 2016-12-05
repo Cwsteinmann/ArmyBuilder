@@ -3,8 +3,11 @@
 <%@ Import Namespace="System.Runtime.CompilerServices" %>
 
 <div>
-    <h5> <%#:this.DisplayUnit.UnitData.Name %>  <span ID="SmallerHeader" style="font-size: 16px">Size: <%#: this.DisplayUnit.SizeData.InitialSize %> - <%#: this.DisplayUnit.SizeData.MaxSize %></span></h5>
     
+    <h2 class="dnnFormSectionHead"> <%#:this.DisplayUnit.UnitData.Name %> ></h2>
+    <fieldset class="dnnClear">
+    <asp:HiddenField runat="server" ID="UnitIdHiddenField" Value="<%#:this.DisplayUnit.Unit.UnitID %>"/>
+    <p> Size: <%#: this.DisplayUnit.SizeData.InitialSize %> - <%#: this.DisplayUnit.SizeData.MaxSize %></p>
     <p>Type : <%#: this.DisplayUnit.UnitData.Type%> &nbsp;&nbsp;&nbsp; Slot Type : <%#: this.DisplayUnit.UnitData.SlotType %></p>
    
     <p>Total Cost : <%#:this.DisplayUnit.UnitData.Cost %></p>
@@ -29,7 +32,7 @@
     <div>
         <asp:Label runat="server" >Size: </asp:Label>
         <asp:TextBox runat="server" ID="SizeInput" Text="<%#:this.DisplayUnit.SizeData.CurrentSize %>" Style="text-align:right; width:75px;"/>
-        <asp:Button runat="server" ID="ButtonSetSize" Text="Set Unit Size"/>
+        <asp:Button runat="server" ID="ButtonSetSize" Text="Set Unit Size" OnClick="ButtonSetSize_Click"/>
     </div>
 
     <div ID="UnitRulesDiv">
@@ -63,19 +66,33 @@
                     <asp:Label runat="server" ID="WargearLabel" AssociatedControlID="WargearInput">
                         <span><%#: Item.DisplayString %></span>
                     </asp:Label>
+                     <asp:HiddenField runat="server" ID="WargearHiddenField" Value="<%#:Item.Name %>"/>
                 </li>
             </ItemTemplate>
             <FooterTemplate>
                 </ul>
-                <asp:Button runat="server" Text="Set Wargear"/>
+                <asp:Button runat="server" Text="Set Wargear" OnClick="ButtonWargear_Click" ID="ButtonWargear"/>
             </FooterTemplate>
         </asp:Repeater>
     </div>
+    <asp:Button runat="server" ID="ButtonDeleteUnit" OnClick="ButtonDeleteUnit_Click" Text="Delete Unit"/>
+    </fieldset>
 </div>
 
-<script runat="server">
+<script type="text/javascript">
     
-    
+    jQuery(function ($) {
+        var setupModule = function () {
+            $('#panels-demo').dnnPanels();
+            $('#panels-demo .dnnFormExpandContent a').dnnExpandAll({
+                targetArea: '#panels-demo'
+            });
+        };
+        setupModule();
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            setupModule();
+        });
+    });
 
 
 </script>

@@ -5,6 +5,8 @@
 namespace Testing.Dnn.ArmyManager
 {
     using System;
+    using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Web.Mvp;
@@ -15,41 +17,53 @@ namespace Testing.Dnn.ArmyManager
     [PresenterBinding(typeof(ViewArmyManagerPresenter))]
     public partial class ViewArmyManager : ModuleView<ViewArmyManagerViewModel>, IViewArmyManagerView
     {
+        public event EventHandler<EventArgs> ButtonLoadArmyClicked;
+
+        /// <summary>
+        /// Event which creates a new army
+        /// </summary>
         public event EventHandler<ButtonNewArmyEventArgs> ButtonNewArmyClicked;
 
+        /// <summary>
+        /// Event which adds a new unit to the army
+        /// </summary>
         public event EventHandler<ButtonNewUnitEventArgs> ButtonNewUnitClicked;
 
         /// <summary>
-        /// Rule Checked
+        /// Event which deletes a select unit from the army
         /// </summary>
-        public event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradeChecked;
+        public event EventHandler<ButtonDeleteUnitEventArgs> ButtonDeleteUnitClicked;
 
         /// <summary>
-        /// Button Submit
+        /// Event which updates the selected upgrades for a select unit in the army
         /// </summary>
-        public event EventHandler<ButtonSubmitSizeEventArgs> ButtonSubmitClicked;
+        public event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradesSelectedIndexChanged;
 
         /// <summary>
-        /// Action for checkboxes in unit view
+        /// Event which updates the selected wargear for a select unit in the army
         /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">event arguments</param>
-        protected void T1Form_OnRuleUpgradeChecked(object sender, RuleUpgradeCheckedEventArgs e)
+        public event EventHandler<ButtonWargearEventArgs> ButtonWargearClicked;
+
+        public event EventHandler<ButtonSelectArmyEventArgs> ButtonSelectArmyClicked;
+
+        /// <summary>
+        /// Event to update the size of a unit in the army
+        /// </summary>
+        public event EventHandler<ButtonSetSizeEventArgs> ButtonSetSizeClicked;
+
+        protected void OnButtonLoadArmyClicked(object sender, EventArgs e)
         {
-            this.RuleUpgradeChecked?.Invoke(this, e);
+            this.ButtonLoadArmyClicked?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Action to change unit size
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">event arguments</param>
-        protected void T1Form_OnButtonSubmitSizeClicked(object sender, ButtonSubmitSizeEventArgs e)
+        public void OnButtonSelectArmyClicked(object sender, RepeaterCommandEventArgs e)
         {
-            this.ButtonSubmitClicked?.Invoke(this, new ButtonSubmitSizeEventArgs(e.Amount));
+            var armyID = int.Parse(((Button)e.CommandSource).CommandArgument);
+
+            this.ButtonSelectArmyClicked?.Invoke(this, new ButtonSelectArmyEventArgs(armyID));
         }
 
-        /// <summary>Called when [button new army clicked].</summary>
+        /// <summary>Called when <see cref="ButtonNewArmyClicked"> occurs</see>.</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void OnButtonNewArmyClicked(object sender, EventArgs e)
@@ -57,10 +71,37 @@ namespace Testing.Dnn.ArmyManager
             this.ButtonNewArmyClicked?.Invoke(this, new ButtonNewArmyEventArgs(this.NewArmyName.Text, int.Parse(this.NewArmyPointsLimit.Text)));
         }
 
+        /// <summary>Called when <see cref="ButtonNewUnitClicked"> occurs.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void OnButtonAddNewUnitClicked(object sender, EventArgs e)
         {
             this.ButtonNewUnitClicked?.Invoke(this, new ButtonNewUnitEventArgs(this.NewUnitDDL.SelectedValue));
         }
+
+        /// <summary>Called when <see cref="ButtonSetSizeClicked"> occurs.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ButtonSetSizeEventArgs"/> instance containing the event data.</param>
+        protected void OnButtonSetSizeClicked(object sender, ButtonSetSizeEventArgs e)
+        {
+            this.ButtonSetSizeClicked?.Invoke(this, e);
+        }
+
+        protected void OnButtonDeleteUnitClicked(object sender, ButtonDeleteUnitEventArgs e)
+        {
+            this.ButtonDeleteUnitClicked?.Invoke(this, e);
+        }
+
+        protected void OnRuleUpgradesSelectedIndexChanged(object sender, RuleUpgradeCheckedEventArgs e)
+        {
+            this.RuleUpgradesSelectedIndexChanged?.Invoke(this, e);
+        }
+
+        protected void OnButtonWargearClicked(object sender, ButtonWargearEventArgs e)
+        {
+            this.ButtonWargearClicked?.Invoke(this, e);
+        }
+
     }
 
     public class ButtonNewUnitEventArgs : EventArgs
@@ -91,5 +132,15 @@ namespace Testing.Dnn.ArmyManager
         public string ArmyName;
 
         public int Points;
+    }
+
+    public class ButtonSelectArmyEventArgs : EventArgs
+    {
+        public ButtonSelectArmyEventArgs(int armyID)
+        {
+            this.ArmyID = armyID;
+        }
+
+        public int ArmyID;
     }
 }
