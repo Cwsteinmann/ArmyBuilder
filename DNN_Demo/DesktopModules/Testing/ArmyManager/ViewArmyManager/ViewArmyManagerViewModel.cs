@@ -12,8 +12,7 @@ namespace Testing.Dnn.ArmyManager
     using DotNetNuke.UI.WebControls;
 
     using Testing.Dnn.ArmyManager.ArmyManager;
-
-    using Army =Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager.Army;
+    
     using Unit = Testing.Dnn.ArmyManager.ArmyManager.Unit;
 
     /// <summary>The view model for the Army Manager, to be displayed by <see cref="IViewArmyManagerView"/></summary>

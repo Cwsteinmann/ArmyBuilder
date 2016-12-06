@@ -284,7 +284,7 @@ namespace Testing.Dnn.ArmyManager
             this.RefreshView();
         }
 
-        private ViewArmyManagerViewModel.UnitViewModel MakeUnitFromServerData(int unitType, int size, int unitID, ArmyDataContext context)
+        public ViewArmyManagerViewModel.UnitViewModel MakeUnitFromServerData(int unitType, int size, int unitID, ArmyDataContext context)
         {
             ViewArmyManagerViewModel.UnitViewModel newUnitModel;
             Unit newUnit;

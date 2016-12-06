@@ -102,6 +102,21 @@ namespace Testing.Dnn.ArmyManager
             this.ButtonWargearClicked?.Invoke(this, e);
         }
 
+        protected void OnButtonDeleteUnitClicked(object sender, RepeaterCommandEventArgs e)
+        {
+            var unitId = int.Parse(((Button)e.CommandSource).CommandArgument);
+            this.ButtonDeleteUnitClicked?.Invoke(this, new ButtonDeleteUnitEventArgs(unitId));
+        }
+    }
+
+    public class ButtonDeleteUnitEventArgs : EventArgs
+    {
+        public ButtonDeleteUnitEventArgs(int unitID)
+        {
+            this.UnitId = unitID;
+        }
+
+        public int UnitId { get; set; }
     }
 
     public class ButtonNewUnitEventArgs : EventArgs

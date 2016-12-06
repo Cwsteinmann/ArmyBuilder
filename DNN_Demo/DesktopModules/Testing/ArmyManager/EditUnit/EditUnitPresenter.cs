@@ -5,9 +5,13 @@
 namespace Testing.Dnn.ArmyManager
 {
     using System;
+    using System.Globalization;
     using System.Linq;
 
+    using DotNetNuke.Collections;
     using DotNetNuke.Web.Mvp;
+
+    using Testing.Dnn.ArmyManager.ArmyManager;
 
     using WebFormsMvp;
 
@@ -20,6 +24,10 @@ namespace Testing.Dnn.ArmyManager
             : base(view)
         {
             this.View.Initialize += this.View_Initialize;
+            this.View.RuleUpgradesSelectedIndexChanged += this.UpdateRules;
+            this.View.ButtonWargearClicked += this.UpdateWargear;
+            this.View.ButtonSetSizeClicked += this.UpdateSize;
+
         }
 
         /// <summary>Handles the <see cref="IModuleViewBase.Initialize"/> event of the <see cref="Presenter{TView}.View"/>.</summary>
@@ -27,6 +35,154 @@ namespace Testing.Dnn.ArmyManager
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void View_Initialize(object sender, EventArgs e)
         {
+            this.RefreshEditView();
+        }
+
+        private void RefreshEditView()
+        {
+            var unitId = this.Request.QueryString.GetValueOrDefault("UnitId", 0);
+            using (var context = new ArmyDataContext())
+            {
+                var myUnit = (from unit in context.Engage_Units where unit.UnitId == unitId select unit).FirstOrDefault();
+
+                this.View.Model.DisplayUnit = this.MakeUnitFromServerData(myUnit.UnitType, myUnit.Size, myUnit.UnitId, context);
+            }
+        }
+
+        private void UpdateWargear(object sender, ButtonWargearEventArgs e)
+        {
+            var checkUnit = this.View.Model.DisplayUnit;
+            var newWargearValues = e.Wargear;
+
+            foreach (var upgrade in newWargearValues)
+            {
+                checkUnit.Unit.SetWargear(upgrade.Key, upgrade.Value);
+            }
+
+            using (var context = new ArmyDataContext())
+            {
+                var myUnit = context.Engage_Units.SingleOrDefault(unit => unit.UnitId == e.UnitID);
+
+                foreach (var wargear in checkUnit.Unit.SelectedWargearUpgrades)
+                {
+                    var myWargear = (from wargearTable in myUnit.Engage_Unit_Wargears
+                                     join wargearNames in context.Engage_WargearUpgrades on wargearTable.WargearID equals wargearNames.WargearID
+                                     where wargearNames.Wargear == wargear.Key
+                                     select wargearTable).SingleOrDefault();
+
+                    myWargear.Amount = wargear.Value;
+                }
+
+                context.SubmitChanges();
+            }
+
+            this.RefreshEditView();
+        }
+
+        private void UpdateRules(object sender, RuleUpgradeCheckedEventArgs e)
+        {
+            var checkUnit = this.View.Model.DisplayUnit;
+
+            var newRules = e.SelectedValues.Except(checkUnit.Unit.SelectedRuleUpgrades);
+            var deletedRules = checkUnit.Unit.SelectedRuleUpgrades.Except(e.SelectedValues);
+
+            using (var context = new ArmyDataContext())
+            {
+                var myUnit = context.Engage_Units.SingleOrDefault(unit => unit.UnitId == e.UnitId);
+
+                var rules = (from rule in context.Engage_RulesUpgrades
+                             where newRules.Contains(rule.RuleName)
+                             select new { rule.RuleID, UnitID = myUnit.UnitId, })
+                            .AsEnumerable()
+                            .Select(rule => new Engage_Unit_Rule { RuleID = rule.RuleID, UnitID = rule.UnitID, });
+
+                var deleteRules = from rule in context.Engage_Unit_Rules
+                                  join ruleName in context.Engage_RulesUpgrades on rule.RuleID equals ruleName.RuleID
+                                  where rule.UnitID == myUnit.UnitId
+                                  where deletedRules.Contains(ruleName.RuleName)
+                                  select rule;
+
+                context.Engage_Unit_Rules.DeleteAllOnSubmit(deleteRules);
+                context.Engage_Unit_Rules.InsertAllOnSubmit(rules);
+
+                context.SubmitChanges();
+            }
+
+            this.RefreshEditView();
+        }
+
+        private void UpdateSize(object sender, ButtonSetSizeEventArgs e)
+        {
+            var checkUnit = this.View.Model.DisplayUnit;
+            checkUnit.Unit.CurrentSize = e.Size;
+            var size = checkUnit.Unit.CurrentSize;
+
+            using (var context = new ArmyDataContext())
+            {
+                var myUnit = context.Engage_Units.SingleOrDefault(unit => unit.UnitId == e.UnitID);
+
+                if (myUnit == null)
+                {
+                    throw new InvalidOperationException("Cannot update a unit that does not exist.");
+                }
+
+                myUnit.Size = size;
+                context.SubmitChanges();
+
+            }
+
+            this.RefreshEditView();
+        }
+
+        public EditUnitViewModel.UnitViewModel MakeUnitFromServerData(int unitType, int size, int unitID, ArmyDataContext context)
+        {
+            EditUnitViewModel.UnitViewModel newUnitModel;
+            Unit newUnit;
+            switch (unitType)
+            {
+                case 1:
+                    newUnit = new Termagant();
+                    break;
+                default:
+                    // TODO: make better default
+                    newUnit = new Termagant();
+                    break;
+            }
+
+            newUnit.CurrentSize = size;
+            newUnit.UnitID = unitID;
+
+            var listWargear = (from wargear in context.Engage_Unit_Wargears
+                               join names in context.Engage_WargearUpgrades on wargear.WargearID equals names.WargearID
+                               where wargear.UnitID == unitID
+                               select new { wargear.Amount, names.Wargear })
+                               .ToDictionary(a => a.Wargear, a => a.Amount);
+
+            foreach (var wargear in listWargear)
+            {
+                newUnit.SetWargear(wargear.Key, wargear.Value);
+            }
+
+            var listRules = from rules in context.Engage_Unit_Rules
+                            join names in context.Engage_RulesUpgrades on rules.RuleID equals names.RuleID
+                            where rules.UnitID == unitID
+                            select names.RuleName;
+
+            foreach (string rule in listRules)
+            {
+                newUnit.SetUpgrade(rule);
+            }
+
+            newUnit.UpdateWargear();
+
+            var editUrl = this.ModuleContext.EditUrl(
+                "UnitId",
+                unitID.ToString(CultureInfo.InvariantCulture),
+                "EditUnit");
+
+            newUnitModel = new EditUnitViewModel.UnitViewModel(newUnit, editUrl);
+
+            return newUnitModel;
         }
     }
 }

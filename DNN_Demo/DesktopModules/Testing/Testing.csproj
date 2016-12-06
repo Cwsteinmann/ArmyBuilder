@@ -135,7 +135,6 @@
     </Compile>
     <Compile Include="ArmyManager\EditUnit\EditUnitPresenter.cs" />
     <Compile Include="ArmyManager\EditUnit\EditUnitViewModel.cs" />
-    <Compile Include="ArmyManager\ViewArmyManager\Army.cs" />
     <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.cs">
       <DependentUpon>UnitForm.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

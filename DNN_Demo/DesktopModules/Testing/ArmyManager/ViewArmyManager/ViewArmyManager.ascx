@@ -50,8 +50,6 @@
         <asp:Button runat="server" Text="Add New Unit" OnClick="OnButtonAddNewUnitClicked"/>
         
         
-        <div class="dnnForm" id="panels-demo">
-            <div class="dnnFormExpandContent"><a href="">Expand All</a></div>
                 <asp:Repeater runat="server" DataSource="<%# this.HQUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
                     <HeaderTemplate>
                 
@@ -60,21 +58,22 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <a href="<%#:Item.EditUrl %>">Edit Unit</a>
-                        <Testing:UnitForm runat="server" DisplayUnit="<%# Item %>"/>
                     </ItemTemplate>
                 </asp:Repeater>
         
-                <asp:Repeater runat="server" DataSource="<%# this.TroopUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
+                <asp:Repeater runat="server" OnItemCommand="OnButtonDeleteUnitClicked" DataSource="<%# this.TroopUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
                     <HeaderTemplate>
                         <h4>Troop choices</h4>
                         <hr />
                     </HeaderTemplate>
                     <ItemTemplate>
+                        <p><%#: Item.UnitData.Name %> : <%#: Item.UnitData.Cost %></p>
                         <a href="<%#:Item.EditUrl %>">Edit Unit</a>
-                        <Testing:UnitForm runat="server" DisplayUnit="<%# Item %>" OnButtonSetSizeClicked="OnButtonSetSizeClicked" OnButtonDeleteUnitClicked="OnButtonDeleteUnitClicked" OnRuleUpgradesSelectedIndexChanged="OnRuleUpgradesSelectedIndexChanged" OnButtonWargearClicked="OnButtonWargearClicked"/>
+                        <asp:Button runat="server" ID="ButtonDeleteUnit" Text="Delete Unit" CommandArgument="<%# Item.Unit.UnitID %>" />
+                        <hr/>
                     </ItemTemplate>
                 </asp:Repeater>
-            </div>
+          
         
     </asp:Panel>
 
@@ -98,19 +97,4 @@
     }
 </script>
 
-<script type="text/javascript">
-    
-    jQuery(function ($) {
-        var setupModule = function () {
-            $('#panels-demo').dnnPanels();
-            $('#panels-demo .dnnFormExpandContent a').dnnExpandAll({
-                targetArea: '#panels-demo'
-            });
-        };
-        setupModule();
-        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-            setupModule();
-        });
-    });
 
-</script>

@@ -10,7 +10,11 @@ namespace Testing.Dnn.ArmyManager
 
     public interface IEditUnitView : IModuleView<EditUnitViewModel>
     {
-        
+        event EventHandler<ButtonSetSizeEventArgs> ButtonSetSizeClicked;
+
+        event EventHandler<ButtonWargearEventArgs> ButtonWargearClicked;
+
+        event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradesSelectedIndexChanged;
     }
 
 }
