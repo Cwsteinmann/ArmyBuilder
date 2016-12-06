@@ -59,6 +59,7 @@
                         <hr />
                     </HeaderTemplate>
                     <ItemTemplate>
+                        <a href="<%#:Item.EditUrl %>">Edit Unit</a>
                         <Testing:UnitForm runat="server" DisplayUnit="<%# Item %>"/>
                     </ItemTemplate>
                 </asp:Repeater>
@@ -69,6 +70,7 @@
                         <hr />
                     </HeaderTemplate>
                     <ItemTemplate>
+                        <a href="<%#:Item.EditUrl %>">Edit Unit</a>
                         <Testing:UnitForm runat="server" DisplayUnit="<%# Item %>" OnButtonSetSizeClicked="OnButtonSetSizeClicked" OnButtonDeleteUnitClicked="OnButtonDeleteUnitClicked" OnRuleUpgradesSelectedIndexChanged="OnRuleUpgradesSelectedIndexChanged" OnButtonWargearClicked="OnButtonWargearClicked"/>
                     </ItemTemplate>
                 </asp:Repeater>

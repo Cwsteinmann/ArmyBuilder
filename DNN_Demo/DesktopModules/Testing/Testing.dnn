@@ -55,6 +55,12 @@
                     <controlType>View</controlType>
                   </moduleControl>
                   <moduleControl>
+                    <controlKey>EditUnit</controlKey>
+                    <controlSrc>DesktopModules/Testing/ArmyManager/EditUnit/EditUnit.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlType>Edit</controlType>
+                  </moduleControl>
+                  <moduleControl>
                     <controlKey>Settings</controlKey>
                     <controlSrc>DesktopModules/Testing/ArmyManager/Settings/Settings.ascx</controlSrc>
                     <controlTitle>Testing: Army Manager Settings</controlTitle>

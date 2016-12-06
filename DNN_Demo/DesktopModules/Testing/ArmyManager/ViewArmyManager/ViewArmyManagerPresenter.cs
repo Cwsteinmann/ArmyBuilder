@@ -276,7 +276,8 @@ namespace Testing.Dnn.ArmyManager
                 context.Engage_Unit_Wargears.InsertAllOnSubmit(newWargear);
                 context.SubmitChanges();
 
-                var insertUnit = new ViewArmyManagerViewModel.UnitViewModel(myUnit);
+                var editUrl = this.ModuleContext.EditUrl("UnitId", newUnit.UnitId.ToString(CultureInfo.InvariantCulture), "EditUnit");
+                var insertUnit = new ViewArmyManagerViewModel.UnitViewModel(myUnit, editUrl);
                 this.View.Model.Army.Append(insertUnit);
             }
 
@@ -324,7 +325,12 @@ namespace Testing.Dnn.ArmyManager
 
             newUnit.UpdateWargear();
 
-            newUnitModel = new ViewArmyManagerViewModel.UnitViewModel(newUnit);
+            var editUrl = this.ModuleContext.EditUrl(
+                "UnitId",
+                unitID.ToString(CultureInfo.InvariantCulture),
+                "EditUnit");
+
+            newUnitModel = new ViewArmyManagerViewModel.UnitViewModel(newUnit, editUrl);
 
             return newUnitModel;
         }

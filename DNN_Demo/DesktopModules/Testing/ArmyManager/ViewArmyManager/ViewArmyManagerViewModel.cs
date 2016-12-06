@@ -76,7 +76,7 @@ namespace Testing.Dnn.ArmyManager
             /// Unit View Model initializer
             /// </summary>
             /// <param name="unit">an instance of the <see cref="Unit" /> class. </param>
-            public UnitViewModel(Unit unit)
+            public UnitViewModel(Unit unit, string editUrl)
             {
                 this.Wargear = from wargear in unit.WargearUpgrades
                                join selectedWargear in unit.SelectedWargearUpgrades on wargear.Key equals selectedWargear.Key
@@ -88,6 +88,7 @@ namespace Testing.Dnn.ArmyManager
                 this.Rules = from rules in unit.SpecialRules select new InitialRulesViewModel(rules);
 
                 this.Unit = unit;
+                this.EditUrl = editUrl;
 
                 this.SizeData = new SizeDataViewModel(unit.InitialSize, unit.MaxSize, unit.CurrentSize, unit.CostPerUnit);
 
@@ -98,6 +99,8 @@ namespace Testing.Dnn.ArmyManager
             /// Gets the unit for the prupose of updating data
             /// </summary>
             public Unit Unit { get; private set; }
+
+            public string EditUrl { get; set; }
 
             /// <summary>
             /// Gets the unit data associated with the unit

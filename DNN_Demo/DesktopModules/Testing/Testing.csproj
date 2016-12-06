@@ -125,6 +125,16 @@
     <Compile Include="ArmyManager\Settings\SettingsViewModel.cs" />
     <Compile Include="ArmyManager\Termagant.cs" />
     <Compile Include="ArmyManager\Unit.cs" />
+    <Compile Include="ArmyManager\EditUnit\IEditUnitView.cs" />
+    <Compile Include="ArmyManager\EditUnit\EditUnit.ascx.cs">
+      <DependentUpon>EditUnit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArmyManager\EditUnit\EditUnit.ascx.designer.cs">
+      <DependentUpon>EditUnit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ArmyManager\EditUnit\EditUnitPresenter.cs" />
+    <Compile Include="ArmyManager\EditUnit\EditUnitViewModel.cs" />
     <Compile Include="ArmyManager\ViewArmyManager\Army.cs" />
     <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.cs">
       <DependentUpon>UnitForm.ascx</DependentUpon>
@@ -160,6 +170,7 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="ArmyManager\Settings\Settings.ascx" />
+    <Content Include="ArmyManager\EditUnit\EditUnit.ascx" />
     <Content Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx" />
     <Content Include="bin\DotNetNuke.dll" />
     <Content Include="SQL\Uninstall.sql" />
@@ -196,6 +207,9 @@
     <None Include="ArmyManager\Army.dbml.layout">
       <DependentUpon>Army.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArmyManager\EditUnit\App_LocalResources\EditUnit.ascx.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
