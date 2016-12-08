@@ -117,4 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Set Unit Size.Text" xml:space="preserve">
+    <value>Set Unit Size</value>
+  </data>
+  <data name="Set Wargear.Text" xml:space="preserve">
+    <value>Set Wargear</value>
+  </data>
+  <data name="Size.Text" xml:space="preserve">
+    <value>Size:</value>
+  </data>
+  <data name="Slot Type.Text" xml:space="preserve">
+    <value>Slot Type:</value>
+  </data>
+  <data name="Special Rules.Text" xml:space="preserve">
+    <value>Special Rules:</value>
+  </data>
+  <data name="Total Cost.Text" xml:space="preserve">
+    <value>Total Cost:</value>
+  </data>
+  <data name="Type.Text" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="Wargear.Text" xml:space="preserve">
+    <value>Wargear:</value>
+  </data>
 </root>

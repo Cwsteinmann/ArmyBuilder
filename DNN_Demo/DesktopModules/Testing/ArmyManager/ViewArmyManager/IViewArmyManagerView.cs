@@ -8,27 +8,36 @@ namespace Testing.Dnn.ArmyManager
 
     using DotNetNuke.Web.Mvp;
 
-    /// <summary>The contract of the main view</summary>
+    using Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager;
+
+    /// <summary>
+    /// The contract of the main view
+    /// </summary>
     public interface IViewArmyManagerView : IModuleView<ViewArmyManagerViewModel>
     {
+        /// <summary>
+        /// Occurs when [button new unit clicked].
+        /// </summary>
         event EventHandler<ButtonNewUnitEventArgs> ButtonNewUnitClicked;
 
+        /// <summary>
+        /// Occurs when [button delete unit clicked].
+        /// </summary>
         event EventHandler<ButtonDeleteUnitEventArgs> ButtonDeleteUnitClicked;
 
-        event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradesSelectedIndexChanged;
-
+        /// <summary>
+        /// Occurs when [button load army clicked].
+        /// </summary>
         event EventHandler<EventArgs> ButtonLoadArmyClicked;
 
+        /// <summary>
+        /// Occurs when [button select army clicked].
+        /// </summary>
         event EventHandler<ButtonSelectArmyEventArgs> ButtonSelectArmyClicked;
 
         /// <summary>
         /// event for creating a new army
         /// </summary>
         event EventHandler<ButtonNewArmyEventArgs> ButtonNewArmyClicked;
-
-        event EventHandler<ButtonSetSizeEventArgs> ButtonSetSizeClicked;
-
-        event EventHandler<ButtonWargearEventArgs> ButtonWargearClicked;
     }
-
 }

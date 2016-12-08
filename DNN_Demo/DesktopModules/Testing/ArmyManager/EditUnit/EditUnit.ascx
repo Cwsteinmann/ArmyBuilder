@@ -7,10 +7,10 @@
     <h2> <%#:this.Model.DisplayUnit.UnitData.Name %></h2>
     
     <asp:HiddenField runat="server" ID="UnitIdHiddenField" Value="<%#:this.Model.DisplayUnit.Unit.UnitID %>"/>
-    <p> Size: <%#: this.Model.DisplayUnit.SizeData.InitialSize %> - <%#: this.Model.DisplayUnit.SizeData.MaxSize %></p>
-    <p>Type : <%#: this.Model.DisplayUnit.UnitData.Type%> &nbsp;&nbsp;&nbsp; Slot Type : <%#: this.Model.DisplayUnit.UnitData.SlotType %></p>
+    <p><%: this.LocalizeString("Size.Text") %> <%#: this.Model.DisplayUnit.SizeData.InitialSize %> - <%#: this.Model.DisplayUnit.SizeData.MaxSize %></p>
+    <p><%: this.LocalizeString("Type.Text") %> <%#: this.Model.DisplayUnit.UnitData.Type%> &nbsp;&nbsp;&nbsp; <%: this.LocalizeString("Slot Type.Text") %> <%#: this.Model.DisplayUnit.UnitData.SlotType %></p>
    
-    <p>Total Cost : <%#:this.Model.DisplayUnit.UnitData.Cost %></p>
+    <p><%: this.LocalizeString("Total Cost.Text") %> <%#:this.Model.DisplayUnit.UnitData.Cost %></p>
     
     <table class="dnnGrid">
         <thead>
@@ -30,13 +30,13 @@
         </table>
     
     <div>
-        <asp:Label runat="server" >Size: </asp:Label>
+        <asp:Label runat="server" ><%: this.LocalizeString("Size.Text") %> </asp:Label>
         <asp:TextBox runat="server" ID="SizeInput" Text="<%#:this.Model.DisplayUnit.SizeData.CurrentSize %>" Style="text-align:right; width:75px;"/>
-        <asp:Button runat="server" ID="ButtonSetSize" Text="Set Unit Size" OnClick="ButtonSetSize_Click"/>
+        <asp:Button runat="server" ID="ButtonSetSize" class="dnnSecondaryAction" Text='<%#: this.LocalizeString("Set Unit Size.Text") %>' OnClick="ButtonSetSize_Click"/>
     </div>
 
     <div ID="UnitRulesDiv">
-        <h4>Special Rules:</h4>
+        <h4><%: this.LocalizeString("Special Rules.Text") %></h4>
         <ul ID="rulesList">
             <% foreach (var rule in this.Model.DisplayUnit.Rules) { %>
                 <li><%: rule.Name %></li>
@@ -54,9 +54,9 @@
                           OnSelectedIndexChanged="RuleUpgradesCheckBoxList_OnSelectedIndexChanged"
                           OnDataBound="RuleUpgradesCheckBoxList_OnDataBound"/>
     </div>
-        
-    <div ID="UnitWargearDiv">
-        <asp:Repeater runat="server" ID="WargearRepeater" DataSource="<%#this.Model.DisplayUnit.Wargear %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.WarGearViewModel">
+    <asp:Panel runat="server" ID="UnitWargearPanel" Visible="<%# !string.IsNullOrEmpty(this.Model.DisplayUnit.Unit.InitialWargear) %>">
+        <h4><%: this.LocalizeString("Wargear.Text") %></h4>
+        <asp:Repeater runat="server" ID="WargearRepeater" DataSource="<%#this.Model.DisplayUnit.Wargear %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.WarGearViewModel" Visible="<%# (this.Model.DisplayUnit.Unit.CanUpgradeWargear) %>">
             <HeaderTemplate>
                 <ul style="margin-left: 0;"> 
             </HeaderTemplate>
@@ -71,9 +71,18 @@
             </ItemTemplate>
             <FooterTemplate>
                 </ul>
-                <asp:Button runat="server" Text="Set Wargear" OnClick="ButtonWargear_Click" ID="ButtonWargear"/>
+                <asp:Button runat="server" Text='<%#: this.LocalizeString("Set Wargear.Text") %>' OnClick="ButtonWargear_Click" ID="ButtonWargear" class="dnnSecondaryAction"/>
             </FooterTemplate>
         </asp:Repeater>
-    </div>
+        
+        
+        <div Visible="<%# !(this.Model.DisplayUnit.Unit.CanUpgradeWargear) %>" > 
+            <ul ID="WargearList">
+                <% foreach (var wargear in this.Model.DisplayUnit.Wargear) { %>
+                    <li><%: wargear.Name %></li>
+                <% } %>
+            </ul>
+         </div>
+    </asp:Panel>
     
 </div>

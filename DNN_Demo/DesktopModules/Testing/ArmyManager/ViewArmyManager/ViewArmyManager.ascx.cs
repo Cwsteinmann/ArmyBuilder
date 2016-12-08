@@ -11,12 +11,15 @@ namespace Testing.Dnn.ArmyManager
 
     using DotNetNuke.Web.Mvp;
 
+    using Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager;
+
     using WebFormsMvp;
 
     /// <summary>Displays Army Manager.</summary>
     [PresenterBinding(typeof(ViewArmyManagerPresenter))]
     public partial class ViewArmyManager : ModuleView<ViewArmyManagerViewModel>, IViewArmyManagerView
     {
+        /// <summary>Occurs when [button load army clicked].</summary>
         public event EventHandler<EventArgs> ButtonLoadArmyClicked;
 
         /// <summary>
@@ -35,32 +38,27 @@ namespace Testing.Dnn.ArmyManager
         public event EventHandler<ButtonDeleteUnitEventArgs> ButtonDeleteUnitClicked;
 
         /// <summary>
-        /// Event which updates the selected upgrades for a select unit in the army
+        /// Even where army is selected
         /// </summary>
-        public event EventHandler<RuleUpgradeCheckedEventArgs> RuleUpgradesSelectedIndexChanged;
-
-        /// <summary>
-        /// Event which updates the selected wargear for a select unit in the army
-        /// </summary>
-        public event EventHandler<ButtonWargearEventArgs> ButtonWargearClicked;
-
         public event EventHandler<ButtonSelectArmyEventArgs> ButtonSelectArmyClicked;
 
-        /// <summary>
-        /// Event to update the size of a unit in the army
-        /// </summary>
-        public event EventHandler<ButtonSetSizeEventArgs> ButtonSetSizeClicked;
-
-        protected void OnButtonLoadArmyClicked(object sender, EventArgs e)
-        {
-            this.ButtonLoadArmyClicked?.Invoke(this, e);
-        }
-
+        /// <summary>Select an Army on click</summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">The <see cref="RepeaterCommandEventArgs" /> instance containing the event data.</param>
         public void OnButtonSelectArmyClicked(object sender, RepeaterCommandEventArgs e)
         {
             var armyID = int.Parse(((Button)e.CommandSource).CommandArgument);
 
             this.ButtonSelectArmyClicked?.Invoke(this, new ButtonSelectArmyEventArgs(armyID));
+        }
+
+        /// <summary>Load an Army that has been clicked</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <name>sender</name>
+        protected void OnButtonLoadArmyClicked(object sender, EventArgs e)
+        {
+            this.ButtonLoadArmyClicked?.Invoke(this, e);
         }
 
         /// <summary>Called when <see cref="ButtonNewArmyClicked"> occurs</see>.</summary>
@@ -71,91 +69,23 @@ namespace Testing.Dnn.ArmyManager
             this.ButtonNewArmyClicked?.Invoke(this, new ButtonNewArmyEventArgs(this.NewArmyName.Text, int.Parse(this.NewArmyPointsLimit.Text)));
         }
 
-        /// <summary>Called when <see cref="ButtonNewUnitClicked"> occurs.</summary>
+        /// <summary>Called when [button add new unit clicked].</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        /// Create a new unit click
+        /// <see cref="ButtonNewUnitClicked" /> occurs.
         protected void OnButtonAddNewUnitClicked(object sender, EventArgs e)
         {
             this.ButtonNewUnitClicked?.Invoke(this, new ButtonNewUnitEventArgs(this.NewUnitDDL.SelectedValue));
         }
 
-        /// <summary>Called when <see cref="ButtonSetSizeClicked"> occurs.</summary>
+        /// <summary>Called when [button delete unit clicked].</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="ButtonSetSizeEventArgs"/> instance containing the event data.</param>
-        protected void OnButtonSetSizeClicked(object sender, ButtonSetSizeEventArgs e)
-        {
-            this.ButtonSetSizeClicked?.Invoke(this, e);
-        }
-
-        protected void OnButtonDeleteUnitClicked(object sender, ButtonDeleteUnitEventArgs e)
-        {
-            this.ButtonDeleteUnitClicked?.Invoke(this, e);
-        }
-
-        protected void OnRuleUpgradesSelectedIndexChanged(object sender, RuleUpgradeCheckedEventArgs e)
-        {
-            this.RuleUpgradesSelectedIndexChanged?.Invoke(this, e);
-        }
-
-        protected void OnButtonWargearClicked(object sender, ButtonWargearEventArgs e)
-        {
-            this.ButtonWargearClicked?.Invoke(this, e);
-        }
-
+        /// <param name="e">The <see cref="RepeaterCommandEventArgs"/> instance containing the event data.</param>
         protected void OnButtonDeleteUnitClicked(object sender, RepeaterCommandEventArgs e)
         {
             var unitId = int.Parse(((Button)e.CommandSource).CommandArgument);
             this.ButtonDeleteUnitClicked?.Invoke(this, new ButtonDeleteUnitEventArgs(unitId));
         }
-    }
-
-    public class ButtonDeleteUnitEventArgs : EventArgs
-    {
-        public ButtonDeleteUnitEventArgs(int unitID)
-        {
-            this.UnitId = unitID;
-        }
-
-        public int UnitId { get; set; }
-    }
-
-    public class ButtonNewUnitEventArgs : EventArgs
-    {
-        public ButtonNewUnitEventArgs(string name)
-        {
-            this.UnitName = name;
-        }
-
-        public string UnitName;
-    }
-
-    /// <summary>
-    /// Herp Derp I am JordAn!!!!
-    /// </summary>
-    /// <seealso cref="System.EventArgs" />
-    public class ButtonNewArmyEventArgs : EventArgs
-    {
-        /// <summary>Initializes a new instance of the <see cref="ButtonNewArmyEventArgs"/> class.</summary>
-        /// <param name="name">The name.</param>
-        /// <param name="points">The points.</param>
-        public ButtonNewArmyEventArgs(string name, int points)
-        {
-            this.ArmyName = name;
-            this.Points = points;
-        }
-
-        public string ArmyName;
-
-        public int Points;
-    }
-
-    public class ButtonSelectArmyEventArgs : EventArgs
-    {
-        public ButtonSelectArmyEventArgs(int armyID)
-        {
-            this.ArmyID = armyID;
-        }
-
-        public int ArmyID;
     }
 }

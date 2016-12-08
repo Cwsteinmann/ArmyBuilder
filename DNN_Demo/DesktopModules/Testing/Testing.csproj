@@ -117,14 +117,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Army.dbml</DependentUpon>
     </Compile>
+    <Compile Include="ArmyManager\EditUnit\ButtonSetSizeEventArgs.cs" />
+    <Compile Include="ArmyManager\EditUnit\ButtonWargearEventArgs.cs" />
+    <Compile Include="ArmyManager\EditUnit\RuleUpgradeCheckedEventArgs.cs" />
     <Compile Include="ArmyManager\FeaturesController.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerController.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerRouter.cs" />
     <Compile Include="ArmyManager\API\GetArmyManagerRequest.cs" />
     <Compile Include="ArmyManager\API\ArmyManagerViewModel.cs" />
     <Compile Include="ArmyManager\Settings\SettingsViewModel.cs" />
-    <Compile Include="ArmyManager\Termagant.cs" />
-    <Compile Include="ArmyManager\Unit.cs" />
+    <Compile Include="ArmyManager\Units\HiveGuard.cs" />
+    <Compile Include="ArmyManager\Units\HiveTyrant.cs" />
+    <Compile Include="ArmyManager\Units\Lictor.cs" />
+    <Compile Include="ArmyManager\Units\Termagant.cs" />
+    <Compile Include="ArmyManager\Units\Unit.cs" />
     <Compile Include="ArmyManager\EditUnit\IEditUnitView.cs" />
     <Compile Include="ArmyManager\EditUnit\EditUnit.ascx.cs">
       <DependentUpon>EditUnit.ascx</DependentUpon>
@@ -135,6 +141,12 @@
     </Compile>
     <Compile Include="ArmyManager\EditUnit\EditUnitPresenter.cs" />
     <Compile Include="ArmyManager\EditUnit\EditUnitViewModel.cs" />
+    <Compile Include="ArmyManager\Units\Venomthrope.cs" />
+    <Compile Include="ArmyManager\Units\Zoanthrope.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\ButtonDeleteUnitEventArgs.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\ButtonNewArmyEventArgs.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\ButtonNewUnitEventArgs.cs" />
+    <Compile Include="ArmyManager\ViewArmyManager\ButtonSelectArmyEventArgs.cs" />
     <Compile Include="ArmyManager\ViewArmyManager\Controls\UnitForm.ascx.cs">
       <DependentUpon>UnitForm.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -180,7 +192,9 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Testing.dnn" />
-    <None Include="Testing.build" />
+    <None Include="Testing.build">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Correctness, Design, Globalization, and Security.ruleset" />
     <Content Include="ArmyManager\ViewArmyManager\ViewArmyManager.ascx" />
     <Content Include="web.config" />

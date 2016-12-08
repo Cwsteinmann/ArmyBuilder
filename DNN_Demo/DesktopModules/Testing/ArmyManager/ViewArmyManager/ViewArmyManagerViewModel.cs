@@ -12,7 +12,8 @@ namespace Testing.Dnn.ArmyManager
     using DotNetNuke.UI.WebControls;
 
     using Testing.Dnn.ArmyManager.ArmyManager;
-    
+    using Testing.Dnn.ArmyManager.ArmyManager.Units;
+
     using Unit = Testing.Dnn.ArmyManager.ArmyManager.Unit;
 
     /// <summary>The view model for the Army Manager, to be displayed by <see cref="IViewArmyManagerView"/></summary>
@@ -38,32 +39,31 @@ namespace Testing.Dnn.ArmyManager
             this.ArmyID = id;
         }
 
-        /// <summary>Flag for if the user is loading an existing army</summary>
-        public bool IsLoading;
-
-        /// <summary>
-        /// The list of units that comprises the army
-        /// </summary>
+        /// <summary> Gets or sets the list of units that comprises the army</summary>
         public IEnumerable<UnitViewModel> Army = Enumerable.Empty<UnitViewModel>();
 
-        public IEnumerable<Unit> ListOfUnits = new List<Unit> { { new Termagant() }, };
+        /// <summary> Gets or sets a value indicating whether the user is loading an existing army</summary>
+        public bool IsLoading { get; set; }
 
+        /// <summary> Gets or sets the list of units</summary>
+        public IEnumerable<Unit> ListOfUnits = new List<Unit> { new Termagant(), new HiveTyrant(), new HiveGuard(), new Lictor(), };
+
+        /// <summary>Gets or sets the armies to load.</summary>
+        /// <value>The armies to load.</value>
         public Dictionary<int, string> ArmiesToLoad { get; set; }
 
         /// <summary>
-        /// The max points for the army
+        ///  Gets or sets the max points for the army
         /// </summary>
-        public int MaxPoints;
+        public int MaxPoints { get; set; }
 
         /// <summary>
-        /// The user-determined name of the army
+        ///  Gets or sets the user-determined name of the army
         /// </summary>
-        public string Name;
+        public string Name { get; set; }
 
-        /// <summary>
-        /// The server-determined army ID
-        /// </summary>
-        public int ArmyID;
+        /// <summary> Gets or sets the server-determined army ID</summary>
+        public int ArmyID { get; set; }
 
         /// <summary>
         /// View Model on a Unit level
@@ -74,7 +74,8 @@ namespace Testing.Dnn.ArmyManager
             /// Initializes a new instance of the <see cref="UnitViewModel" /> class.
             /// Unit View Model initializer
             /// </summary>
-            /// <param name="unit">an instance of the <see cref="Unit" /> class. </param>
+            /// <param name="unit">an instance of the <see cref="Unit" /> class.</param>
+            /// <param name="editUrl">The edit URL.</param>
             public UnitViewModel(Unit unit, string editUrl)
             {
                 this.Wargear = from wargear in unit.WargearUpgrades
@@ -99,6 +100,8 @@ namespace Testing.Dnn.ArmyManager
             /// </summary>
             public Unit Unit { get; private set; }
 
+            /// <summary>Gets or sets the edit URL.</summary>
+            /// <value>The edit URL.</value>
             public string EditUrl { get; set; }
 
             /// <summary>
@@ -130,14 +133,13 @@ namespace Testing.Dnn.ArmyManager
         /// </summary>
         public class UnitDataViewModel
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="UnitDataViewModel"/> class.
-            /// </summary>
+            /// <summary>Initializes a new instance of the <see cref="UnitDataViewModel" /> class.</summary>
             /// <param name="stats">The stats of the unit</param>
             /// <param name="name">The name of the unit</param>
             /// <param name="type">The type of the unit</param>
             /// <param name="slotType">The type in the overall army the unit belongs to</param>
             /// <param name="cost">The overall cost of the unit</param>
+            /// <param name="unitID">The unit identifier.</param>
             public UnitDataViewModel(Dictionary<string, int> stats, string name, string type, string slotType, int cost, int unitID)
             {
                 this.Stats = stats;
@@ -324,7 +326,6 @@ namespace Testing.Dnn.ArmyManager
             /// Gets points associated with selected wargear
             /// </summary>
             public int Points { get; private set; }
-
         }
     }
 }

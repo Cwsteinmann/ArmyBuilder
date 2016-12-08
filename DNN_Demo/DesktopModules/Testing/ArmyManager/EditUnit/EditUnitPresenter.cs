@@ -1,4 +1,4 @@
-// <copyright file="ViewArmyManagerPresenter.cs" company="Testing">
+// <copyright file="EditUnitPresenter.cs" company="Testing">
 // Testing: Army Manager
 // Copyright (c) 2016
 // </copyright>
@@ -12,13 +12,15 @@ namespace Testing.Dnn.ArmyManager
     using DotNetNuke.Web.Mvp;
 
     using Testing.Dnn.ArmyManager.ArmyManager;
+    using Testing.Dnn.ArmyManager.ArmyManager.EditUnit;
+    using Testing.Dnn.ArmyManager.ArmyManager.Units;
 
     using WebFormsMvp;
 
-    /// <summary>Acts as a presenter for <see cref="IEditUnitView"/></summary>
+    /// <summary>Acts as a presenter for <see cref="IEditUnitView" /></summary>
     public sealed class EditUnitPresenter : ModulePresenter<IEditUnitView, EditUnitViewModel>
     {
-        /// <summary>Initializes a new instance of the <see cref="EditUnitPresenter"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="EditUnitPresenter" /> class.</summary>
         /// <param name="view">The view.</param>
         public EditUnitPresenter(IEditUnitView view)
             : base(view)
@@ -27,17 +29,86 @@ namespace Testing.Dnn.ArmyManager
             this.View.RuleUpgradesSelectedIndexChanged += this.UpdateRules;
             this.View.ButtonWargearClicked += this.UpdateWargear;
             this.View.ButtonSetSizeClicked += this.UpdateSize;
-
         }
 
-        /// <summary>Handles the <see cref="IModuleViewBase.Initialize"/> event of the <see cref="Presenter{TView}.View"/>.</summary>
+        /// <summary>Makes the unit from server data.</summary>
+        /// <param name="unitType">Type of the unit.</param>
+        /// <param name="size">The size.</param>
+        /// <param name="unitID">The unit identifier.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>A UnitViewModel</returns>
+        public EditUnitViewModel.UnitViewModel MakeUnitFromServerData(int unitType, int size, int unitID, ArmyDataContext context)
+        {
+            Unit newUnit;
+            switch (unitType)
+            {
+                case 1:
+                    newUnit = new Termagant();
+                    break;
+                case 2:
+                    newUnit = new HiveTyrant();
+                    break;
+                case 3:
+                    newUnit = new HiveGuard();
+                    break;
+                case 4:
+                    newUnit = new Lictor();
+                    break;
+                case 5:
+                    newUnit = new Zoanthrope();
+                    break;
+                case 6:
+                    newUnit = new Venomthrope();
+                    break;
+                default:
+                    // TODO: make better default
+                    newUnit = new Termagant();
+                    break;
+            }
+
+            newUnit.CurrentSize = size;
+            newUnit.UnitID = unitID;
+
+            var listWargear = (from wargear in context.Engage_Unit_Wargears
+                               join names in context.Engage_WargearUpgrades on wargear.WargearID equals names.WargearID
+                               where wargear.UnitID == unitID
+                               select new { wargear.Amount, names.Wargear })
+                               .ToDictionary(a => a.Wargear, a => a.Amount);
+
+            foreach (var wargear in listWargear)
+            {
+                newUnit.SetWargear(wargear.Key, wargear.Value);
+            }
+
+            var listRules = from rules in context.Engage_Unit_Rules
+                            join names in context.Engage_RulesUpgrades on rules.RuleID equals names.RuleID
+                            where rules.UnitID == unitID
+                            select names.RuleName;
+
+            foreach (var rule in listRules)
+            {
+                newUnit.SetUpgrade(rule);
+            }
+
+            var editUrl = this.ModuleContext.EditUrl(
+                "UnitId",
+                unitID.ToString(CultureInfo.InvariantCulture),
+                "EditUnit");
+
+            var newUnitModel = new EditUnitViewModel.UnitViewModel(newUnit, editUrl);
+
+            return newUnitModel;
+        }
+
+        /// <summary>Handles the <see cref="IModuleViewBase.Initialize" /> event of the <see cref="Presenter{TView}.View" />.</summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void View_Initialize(object sender, EventArgs e)
         {
             this.RefreshEditView();
         }
 
+        /// <summary>Refreshes the edit view.</summary>
         private void RefreshEditView()
         {
             var unitId = this.Request.QueryString.GetValueOrDefault("UnitId", 0);
@@ -49,6 +120,9 @@ namespace Testing.Dnn.ArmyManager
             }
         }
 
+        /// <summary>Updates the wargear.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ButtonWargearEventArgs"/> instance containing the event data.</param>
         private void UpdateWargear(object sender, ButtonWargearEventArgs e)
         {
             var checkUnit = this.View.Model.DisplayUnit;
@@ -79,6 +153,9 @@ namespace Testing.Dnn.ArmyManager
             this.RefreshEditView();
         }
 
+        /// <summary>Updates the rules.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RuleUpgradeCheckedEventArgs"/> instance containing the event data.</param>
         private void UpdateRules(object sender, RuleUpgradeCheckedEventArgs e)
         {
             var checkUnit = this.View.Model.DisplayUnit;
@@ -111,6 +188,10 @@ namespace Testing.Dnn.ArmyManager
             this.RefreshEditView();
         }
 
+        /// <summary>Updates the size.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ButtonSetSizeEventArgs"/> instance containing the event data.</param>
+        /// <exception cref="System.InvalidOperationException">Cannot update a unit that does not exist.</exception>
         private void UpdateSize(object sender, ButtonSetSizeEventArgs e)
         {
             var checkUnit = this.View.Model.DisplayUnit;
@@ -128,61 +209,9 @@ namespace Testing.Dnn.ArmyManager
 
                 myUnit.Size = size;
                 context.SubmitChanges();
-
             }
 
             this.RefreshEditView();
-        }
-
-        public EditUnitViewModel.UnitViewModel MakeUnitFromServerData(int unitType, int size, int unitID, ArmyDataContext context)
-        {
-            EditUnitViewModel.UnitViewModel newUnitModel;
-            Unit newUnit;
-            switch (unitType)
-            {
-                case 1:
-                    newUnit = new Termagant();
-                    break;
-                default:
-                    // TODO: make better default
-                    newUnit = new Termagant();
-                    break;
-            }
-
-            newUnit.CurrentSize = size;
-            newUnit.UnitID = unitID;
-
-            var listWargear = (from wargear in context.Engage_Unit_Wargears
-                               join names in context.Engage_WargearUpgrades on wargear.WargearID equals names.WargearID
-                               where wargear.UnitID == unitID
-                               select new { wargear.Amount, names.Wargear })
-                               .ToDictionary(a => a.Wargear, a => a.Amount);
-
-            foreach (var wargear in listWargear)
-            {
-                newUnit.SetWargear(wargear.Key, wargear.Value);
-            }
-
-            var listRules = from rules in context.Engage_Unit_Rules
-                            join names in context.Engage_RulesUpgrades on rules.RuleID equals names.RuleID
-                            where rules.UnitID == unitID
-                            select names.RuleName;
-
-            foreach (string rule in listRules)
-            {
-                newUnit.SetUpgrade(rule);
-            }
-
-            newUnit.UpdateWargear();
-
-            var editUrl = this.ModuleContext.EditUrl(
-                "UnitId",
-                unitID.ToString(CultureInfo.InvariantCulture),
-                "EditUnit");
-
-            newUnitModel = new EditUnitViewModel.UnitViewModel(newUnit, editUrl);
-
-            return newUnitModel;
         }
     }
 }

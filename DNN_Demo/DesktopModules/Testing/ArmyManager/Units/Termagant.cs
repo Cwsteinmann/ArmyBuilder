@@ -1,4 +1,8 @@
-﻿namespace Testing.Dnn.ArmyManager.ArmyManager
+﻿// <copyright file="Termagant.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Testing.Dnn.ArmyManager.ArmyManager
 {
     using System;
     using System.Collections.Generic;
@@ -37,7 +41,7 @@
             };
             this.InitialWargear = "Fleshborer";
             this.SpecialRules = new List<string> { "Move Through Cover", "Instinctive Behaviour(Lurk)" };
-
+            this.CanUpgradeWargear = true;
             this.WargearUpgrades = new Dictionary<string, int>
             {
                 { "Fleshborer", 0 },
@@ -68,7 +72,7 @@
         /// </summary>
         /// <param name="weapon">The key associated with the selected weapon upgrade</param>
         /// <param name="amount">the amount of that key that the unit contains</param>
-        public void SetWargear(string weapon, int amount)
+        public new void SetWargear(string weapon, int amount)
         {
             this.SelectedWargearUpgrades.Add(weapon, amount);
 
@@ -82,7 +86,7 @@
         /// Sets the size of the unit
         /// </summary>
         /// <param name="size">user input for how many individuals the unit should have</param>
-        public new void SetUnits(int size)
+        public void SetUnits(int size)
         {
             if (size > this.MaxSize)
             {
@@ -96,6 +100,7 @@
             {
                 this.CurrentSize = size;
             }
+
             this.SelectedWargearUpgrades[this.InitialWargear] =
                 this.CurrentSize - (from entry in this.SelectedWargearUpgrades
                                      where entry.Key != this.InitialWargear

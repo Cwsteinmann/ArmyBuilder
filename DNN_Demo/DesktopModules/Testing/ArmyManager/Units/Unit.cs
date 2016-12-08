@@ -1,17 +1,22 @@
-﻿namespace Testing.Dnn.ArmyManager.ArmyManager
+﻿// <copyright file="Unit.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Testing.Dnn.ArmyManager.ArmyManager
 {
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The base unit class to be extended towards specific individuals
+    /// </summary>
     public class Unit
     {
+        /// <summary>The current size</summary>
         private int currentSize;
 
+        /// <summary>Initializes a new instance of the <see cref="Unit"/> class.</summary>
         public Unit()
-        {
-        }
-
-        public Unit(Engage_Unit dbUnit)
         {
         }
 
@@ -26,7 +31,7 @@
         public int ServerID { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the unit (Eg. Infantry, Beasts, etc)
+        /// Gets or sets the type of the unit
         /// </summary>
         public string Type { get; set; }
 
@@ -44,6 +49,12 @@
         /// Gets or sets the initial points cost of the unit on initialization
         /// </summary>
         public int InitialPoints { get; set; }
+
+        /// <summary>Gets or sets a value indicating whether this instance can upgrade wargear.</summary>
+        /// <value>
+        /// <c>true</c> if this instance can upgrade wargear; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanUpgradeWargear { get; set; }
 
         /// <summary>
         /// Gets or sets the initial size of the unit on initialization
@@ -74,6 +85,10 @@
         /// Gets or sets list of wargear the unit has on initialization
         /// </summary>
         public string InitialWargear { get; set; }
+
+        /// <summary>Gets or sets the initial wargear second arms.</summary>
+        /// <value>The initial wargear second arms.</value>
+        public string InitialWargearSecondArms { get; set; }
 
         /// <summary>
         /// Gets or sets potential wargear upgrades the unit has access to, in Name / Cost per Individual format
@@ -118,14 +133,15 @@
         public List<string> SelectedRuleUpgrades { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of wargear upgrades selected, in wargear / amount format
+        /// Gets or sets the list of Wargear upgrades selected, in Wargear / amount format
         /// </summary>
         public Dictionary<string, int> SelectedWargearUpgrades { get; set; }
 
         /// <summary>
         /// Gets total calculated cost of the unit
         /// </summary>
-        public int TotalCost {
+        public int TotalCost
+        {
             get
             {
                 var cost = 0;
@@ -133,6 +149,43 @@
                 cost += this.GetUpgradePrice();
                 cost += this.GetWargearPrice();
                 return cost;
+            }
+        }
+
+        /// <summary>Sets the wargear.</summary>
+        /// <param name="weapon">The weapon.</param>
+        /// <param name="amount">The amount.</param>
+        public virtual void SetWargear(string weapon, int amount)
+        {
+            this.SelectedWargearUpgrades[weapon] = amount;
+
+            this.UpdateWargear();
+        }
+
+        /// <summary>Updates the wargear.</summary>
+        public virtual void UpdateWargear()
+        {
+            this.SelectedWargearUpgrades[this.InitialWargear] =
+                this.CurrentSize - (from entry in this.SelectedWargearUpgrades
+                                    where entry.Key != this.InitialWargear
+                                    select entry.Value).Sum();
+        }
+
+        /// <summary>
+        /// Adds or removes rule upgrades to the unit, recalculates unit total cost
+        /// </summary>
+        /// <param name="upgradeKey">Key associated with an upgrade</param>
+        public virtual void SetUpgrade(string upgradeKey)
+        {
+            var adding = !this.SelectedRuleUpgrades.Contains(upgradeKey);
+
+            if (adding)
+            {
+                this.SelectedRuleUpgrades.Add(upgradeKey);
+            }
+            else
+            {
+                this.SelectedRuleUpgrades.Remove(upgradeKey);
             }
         }
 
@@ -162,39 +215,6 @@
                         select entry.Value * this.CurrentSize).Sum();
 
             return cost;
-        }
-
-        public void SetWargear(string weapon, int amount)
-        {
-            this.SelectedWargearUpgrades[weapon] = amount;
-
-            this.UpdateWargear();
-        }
-
-        public void UpdateWargear()
-        {
-            this.SelectedWargearUpgrades[this.InitialWargear] =
-                this.CurrentSize - (from entry in this.SelectedWargearUpgrades
-                                    where entry.Key != this.InitialWargear
-                                    select entry.Value).Sum();
-        }
-
-        /// <summary>
-        /// Adds or removes rule upgrades to the unit, recalculates unit total cost
-        /// </summary>
-        /// <param name="upgradeKey">Key associated with an upgrade</param>
-        public void SetUpgrade(string upgradeKey)
-        {
-            var adding = !this.SelectedRuleUpgrades.Contains(upgradeKey);
-
-            if (adding)
-            {
-                this.SelectedRuleUpgrades.Add(upgradeKey);
-            }
-            else
-            {
-                this.SelectedRuleUpgrades.Remove(upgradeKey);
-            }
         }
     }
 }

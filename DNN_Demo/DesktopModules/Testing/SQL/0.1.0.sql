@@ -103,13 +103,11 @@ VALUES ('Scything Talons'),
        ('The Maw-claws of Thyrax'),
        ('The Miasma Cannon'),
        ('The Reaper of Obliterax'),
-       ('Bone Mace'),
-       ('Prehensile Pincer'),
-       ('Thresher Scythe'),
-       ('Toxinspike'),
        ('Shock Cannon'),
        ('Fleshborer Hive'),
-       ('Rupture Cannon');
+       ('Rupture Cannon'),
+	   ('Lash Whips'),
+	   ('Toxic Miasma');
 
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Acid Blood');
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Acid Maw');
@@ -125,3 +123,7 @@ INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Indescribable Horror');
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Old Adversary');
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Hive Commander');
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Deep Strike');
+INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Prehensile Pincer');
+INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Bone Mace');
+INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Thresher Scythe');
+INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Toxinspike');

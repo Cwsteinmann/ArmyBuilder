@@ -49,6 +49,15 @@ namespace Testing.Dnn.ArmyManager {
         protected global::System.Web.UI.WebControls.CheckBoxList RuleUpgradesCheckBoxList;
         
         /// <summary>
+        /// UnitWargearPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel UnitWargearPanel;
+        
+        /// <summary>
         /// WargearRepeater control.
         /// </summary>
         /// <remarks>

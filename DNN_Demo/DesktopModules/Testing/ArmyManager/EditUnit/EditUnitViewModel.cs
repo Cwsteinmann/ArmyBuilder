@@ -1,4 +1,4 @@
-// <copyright file="ViewArmyManagerViewModel.cs" company="Testing">
+// <copyright file="EditUnitViewModel.cs" company="Testing">
 // Testing: Army Manager
 // Copyright (c) 2016
 // </copyright>
@@ -9,18 +9,26 @@ namespace Testing.Dnn.ArmyManager
 
     using Testing.Dnn.ArmyManager.ArmyManager;
 
+    /// <summary>
+    /// the edit unit view model
+    /// </summary>
     public class EditUnitViewModel
     {
-
+        /// <summary>Gets or sets the display unit.</summary>
+        /// <value>The display unit.</value>
         public UnitViewModel DisplayUnit { get; set; }
 
+        /// <summary>
+        /// unit view model
+        /// </summary>
         public class UnitViewModel
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.UnitViewModel" /> class.
+            /// Initializes a new instance of the <see cref="EditUnitViewModel.UnitViewModel" /> class.
             /// Unit View Model initializer
             /// </summary>
-            /// <param name="unit">an instance of the <see cref="Unit" /> class. </param>
+            /// <param name="unit">an instance of the <see cref="Unit" /> class.</param>
+            /// <param name="editUrl">The edit URL.</param>
             public UnitViewModel(Unit unit, string editUrl)
             {
                 this.Wargear = from wargear in unit.WargearUpgrades
@@ -45,6 +53,8 @@ namespace Testing.Dnn.ArmyManager
             /// </summary>
             public Unit Unit { get; private set; }
 
+            /// <summary>Gets or sets the edit URL.</summary>
+            /// <value>The edit URL.</value>
             public string EditUrl { get; set; }
 
             /// <summary>
@@ -76,14 +86,13 @@ namespace Testing.Dnn.ArmyManager
         /// </summary>
         public class UnitDataViewModel
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.UnitDataViewModel"/> class.
-            /// </summary>
+            /// <summary>Initializes a new instance of the <see cref="EditUnitViewModel.UnitDataViewModel" /> class.</summary>
             /// <param name="stats">The stats of the unit</param>
             /// <param name="name">The name of the unit</param>
             /// <param name="type">The type of the unit</param>
             /// <param name="slotType">The type in the overall army the unit belongs to</param>
             /// <param name="cost">The overall cost of the unit</param>
+            /// <param name="unitID">The unit identifier.</param>
             public UnitDataViewModel(Dictionary<string, int> stats, string name, string type, string slotType, int cost, int unitID)
             {
                 this.Stats = stats;
@@ -131,7 +140,7 @@ namespace Testing.Dnn.ArmyManager
         public class SizeDataViewModel
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.SizeDataViewModel"/> class.
+            /// Initializes a new instance of the <see cref="EditUnitViewModel.SizeDataViewModel"/> class.
             /// </summary>
             /// <param name="initial">The initial size of the unit</param>
             /// <param name="max">the maximum size of the unit</param>
@@ -166,7 +175,6 @@ namespace Testing.Dnn.ArmyManager
             /// </summary>
             public int CostPerUnit { get; private set; }
 
-
             /// <summary>
             /// Gets the total cost of the size of the unit
             /// </summary>
@@ -179,7 +187,7 @@ namespace Testing.Dnn.ArmyManager
         public class InitialRulesViewModel
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.InitialRulesViewModel"/> class.
+            /// Initializes a new instance of the <see cref="EditUnitViewModel.InitialRulesViewModel"/> class.
             /// </summary>
             /// <param name="name">The name of the rule</param>
             public InitialRulesViewModel(string name)
@@ -199,7 +207,7 @@ namespace Testing.Dnn.ArmyManager
         public class RuleUpgradeViewModel
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.RuleUpgradeViewModel"/> class.
+            /// Initializes a new instance of the <see cref="EditUnitViewModel.RuleUpgradeViewModel"/> class.
             /// </summary>
             /// <param name="name">Name of the upgrade</param>
             /// <param name="points">Cost associated with the upgrade</param>
@@ -237,7 +245,7 @@ namespace Testing.Dnn.ArmyManager
         public class WarGearViewModel
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="ViewArmyManagerViewModel.WarGearViewModel"/> class.
+            /// Initializes a new instance of the <see cref="EditUnitViewModel.WarGearViewModel"/> class.
             /// wargear Model initializer
             /// </summary>
             /// <param name="numberOfThings">number of selected wargear</param>
@@ -270,7 +278,6 @@ namespace Testing.Dnn.ArmyManager
             /// Gets points associated with selected wargear
             /// </summary>
             public int Points { get; private set; }
-
         }
     }
 }
