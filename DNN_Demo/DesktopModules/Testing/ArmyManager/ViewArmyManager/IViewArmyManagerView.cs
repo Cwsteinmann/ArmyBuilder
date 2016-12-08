@@ -5,6 +5,7 @@
 namespace Testing.Dnn.ArmyManager
 {
     using System;
+    using System.Web.UI.WebControls;
 
     using DotNetNuke.Web.Mvp;
 
@@ -39,5 +40,7 @@ namespace Testing.Dnn.ArmyManager
         /// event for creating a new army
         /// </summary>
         event EventHandler<ButtonNewArmyEventArgs> ButtonNewArmyClicked;
+
+        event EventHandler<ServerValidateEventArgs> ServerValidate;
     }
 }

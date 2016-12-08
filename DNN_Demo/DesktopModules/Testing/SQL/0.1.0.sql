@@ -107,7 +107,11 @@ VALUES ('Scything Talons'),
        ('Fleshborer Hive'),
        ('Rupture Cannon'),
 	   ('Lash Whips'),
-	   ('Toxic Miasma');
+	   ('Toxic Miasma'),
+	   ('Twin-linked Stranglethorn Cannon'),
+	   ('Twin-linked Heavy Venom Cannon'),
+	   ('Spore Mine Launcher'),
+	   ('Flamespurt');
 
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Acid Blood');
 INSERT INTO [Engage_RulesUpgrades] (RuleName) VALUES ('Acid Maw');

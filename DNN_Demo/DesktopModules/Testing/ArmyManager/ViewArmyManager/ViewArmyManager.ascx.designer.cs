@@ -40,6 +40,33 @@ namespace Testing.Dnn.ArmyManager {
         protected global::System.Web.UI.WebControls.Repeater SelectArmyRepeater;
         
         /// <summary>
+        /// PointsValidationLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PointsValidationLabel;
+        
+        /// <summary>
+        /// UnitTypeDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList UnitTypeDDL;
+        
+        /// <summary>
+        /// UnitTypeValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator UnitTypeValidator;
+        
+        /// <summary>
         /// NewUnitDDL control.
         /// </summary>
         /// <remarks>
@@ -47,5 +74,14 @@ namespace Testing.Dnn.ArmyManager {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList NewUnitDDL;
+        
+        /// <summary>
+        /// SelectUnitButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SelectUnitButton;
     }
 }

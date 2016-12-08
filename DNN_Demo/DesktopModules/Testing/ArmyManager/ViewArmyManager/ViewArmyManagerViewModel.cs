@@ -39,6 +39,60 @@ namespace Testing.Dnn.ArmyManager
             this.ArmyID = id;
         }
 
+        /// <summary>Gets or sets the error message.</summary>
+        /// <value>The error message.</value>
+        public string ErrorMessage { get; set; }
+
+        /// <summary>Gets the number hq.</summary>
+        /// <value>The number hq.</value>
+        public int NumHQ
+        {
+            get
+            {
+                return this.Army.Count(unit => unit.Unit.UnitType == "HQ");
+            }
+        }
+
+        /// <summary>Gets the number troops.</summary>
+        /// <value>The number troops.</value>
+        public int NumTroops
+        {
+            get
+            {
+                return this.Army.Count(unit => unit.Unit.UnitType == "Troops");
+            }
+        }
+
+        /// <summary>Gets the number elites.</summary>
+        /// <value>The number elites.</value>
+        public int NumElites
+        {
+            get
+            {
+                return this.Army.Count(unit => unit.Unit.UnitType == "Elites");
+            }
+        }
+
+        /// <summary>Gets the number fa.</summary>
+        /// <value>The number fa.</value>
+        public int NumFA
+        {
+            get
+            {
+                return this.Army.Count(unit => unit.Unit.UnitType == "Fast Attack");
+            }
+        }
+
+        /// <summary>Gets the number hs.</summary>
+        /// <value>The number hs.</value>
+        public int NumHS
+        {
+            get
+            {
+                return this.Army.Count(unit => unit.Unit.UnitType == "Heavy Support");
+            }
+        }
+
         /// <summary> Gets or sets the list of units that comprises the army</summary>
         public IEnumerable<UnitViewModel> Army = Enumerable.Empty<UnitViewModel>();
 
@@ -46,7 +100,35 @@ namespace Testing.Dnn.ArmyManager
         public bool IsLoading { get; set; }
 
         /// <summary> Gets or sets the list of units</summary>
-        public IEnumerable<Unit> ListOfUnits = new List<Unit> { new Termagant(), new HiveTyrant(), new HiveGuard(), new Lictor(), };
+        public IEnumerable<Unit> ListOfUnits = new List<Unit>
+        {
+            new HiveTyrant(),
+            new Termagant(),
+            new Gargoyle(),
+            new Harpy(),
+            new Haruspex(),
+            new HiveCrone(),
+            new HiveGuard(),
+            new Lictor(),
+            new Pyrovore(),
+            new SporeMine(),
+            new Venomthrope(),
+            new Zoanthrope(),
+            new Biovore(),
+            new Tyrannofex(),
+            new OldOneEye(),
+            new Deathleaper(),
+            new RipperSwarm(),
+            new Hormagaunt()
+        };
+
+        public int GetCurrentCost
+        {
+            get
+            {
+                return this.Army.Sum(unit => unit.Unit.TotalCost);
+            }
+        }
 
         /// <summary>Gets or sets the armies to load.</summary>
         /// <value>The armies to load.</value>

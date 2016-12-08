@@ -35,7 +35,7 @@
         <asp:Button runat="server" ID="ButtonSetSize" class="dnnSecondaryAction" Text='<%#: this.LocalizeString("Set Unit Size.Text") %>' OnClick="ButtonSetSize_Click"/>
     </div>
 
-    <div ID="UnitRulesDiv">
+    <div ID="UnitRulesDiv" class="dnnLeft">
         <h4><%: this.LocalizeString("Special Rules.Text") %></h4>
         <ul ID="rulesList">
             <% foreach (var rule in this.Model.DisplayUnit.Rules) { %>
@@ -54,7 +54,9 @@
                           OnSelectedIndexChanged="RuleUpgradesCheckBoxList_OnSelectedIndexChanged"
                           OnDataBound="RuleUpgradesCheckBoxList_OnDataBound"/>
     </div>
-    <asp:Panel runat="server" ID="UnitWargearPanel" Visible="<%# !string.IsNullOrEmpty(this.Model.DisplayUnit.Unit.InitialWargear) %>">
+
+    <asp:Panel runat="server" class="dnnLeft" Style="margin-left:50px;" ID="UnitWargearPanel" Visible="<%# !string.IsNullOrEmpty(this.Model.DisplayUnit.Unit.InitialWargear) %>">
+        <div ID="WargearUpgades" >
         <h4><%: this.LocalizeString("Wargear.Text") %></h4>
         <asp:Repeater runat="server" ID="WargearRepeater" DataSource="<%#this.Model.DisplayUnit.Wargear %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.WarGearViewModel" Visible="<%# (this.Model.DisplayUnit.Unit.CanUpgradeWargear) %>">
             <HeaderTemplate>
@@ -74,14 +76,21 @@
                 <asp:Button runat="server" Text='<%#: this.LocalizeString("Set Wargear.Text") %>' OnClick="ButtonWargear_Click" ID="ButtonWargear" class="dnnSecondaryAction"/>
             </FooterTemplate>
         </asp:Repeater>
+        </div>
         
-        
-        <div Visible="<%# !(this.Model.DisplayUnit.Unit.CanUpgradeWargear) %>" > 
-            <ul ID="WargearList">
-                <% foreach (var wargear in this.Model.DisplayUnit.Wargear) { %>
-                    <li><%: wargear.Name %></li>
-                <% } %>
-            </ul>
+        <div ID="SelectedWargear" >
+            <asp:Repeater runat="server" ID="SelectedWargearRepeater" DataSource="<%# this.Model.DisplayUnit.Unit.SelectedWargearUpgrades %>" ItemType="System.Collections.Generic.KeyValuePair`2[System.String, System.Int32]"> 
+                <HeaderTemplate>
+                    <h4>Selected Wargear</h4>
+                    <ul ID="WargearList">
+                </HeaderTemplate>
+                <ItemTemplate>
+                    <li runat="server" Visible="<%# Item.Value > 0 %>"> <%#: Item.Value %>  <%#: Item.Key %></li>
+                </ItemTemplate>
+                <FooterTemplate>
+                    </ul>
+                </FooterTemplate>
+            </asp:Repeater>
          </div>
     </asp:Panel>
     

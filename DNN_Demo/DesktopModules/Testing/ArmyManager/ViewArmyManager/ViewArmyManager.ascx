@@ -42,18 +42,12 @@
     
     <asp:Panel runat="server" Visible="<%# (this.Model.ArmyID != 0) %>">
         <h2><%#: this.Model.Name %></h2>
-        
-        <!-- TODO: Put DDL in a repeater -->
-        <asp:DropDownList runat="server" ID="NewUnitDDL">
-            <asp:ListItem Value="Termagant" Selected="True">Termagant</asp:ListItem>
-            <asp:ListItem Value="Hive Tyrant" >Hive Tyrant</asp:ListItem>
-            <asp:ListItem Value="Hive Guard">Hive Guard</asp:ListItem>
-            <asp:ListItem Value="Lictor Brood">Lictor Brood</asp:ListItem>
-            <asp:ListItem Value="Zoanthrope Brood">Zoanthrope Brood</asp:ListItem>
-            <asp:ListItem Value="Venomthrope Brood">Venomthrope Brood</asp:ListItem>
-        </asp:DropDownList>
-        <asp:Button runat="server" Text="Add New Unit" OnClick="OnButtonAddNewUnitClicked" Class="dnnSecondaryAction" />
-        
+        <h3><%#: this.Model.GetCurrentCost %> / <%#: this.Model.MaxPoints %> Points</h3>
+        <asp:Label runat="server" ID="PointsValidationLabel" Visible="False" ></asp:Label>
+        <asp:DropDownList runat="server" ID="UnitTypeDDL" DataSource="<%#this.ListOfTypes %>" AutoPostBack="true" OnSelectedIndexChanged="UnitTypeDDL_OnSelectedIndexChanged" CausesValidation="True" ValidationGroup="ArmyManager"/>
+        <asp:CustomValidator runat="server" ControlToValidate="UnitTypeDDL" ValidationGroup="ArmyManager" OnServerValidate="OnServerValidate" ID="UnitTypeValidator" ErrorMessage='<%#: this.Model.ErrorMessage %>'/>
+        <asp:DropDownList runat="server" ID="NewUnitDDL" Visible="False"></asp:DropDownList>
+        <asp:Button runat="server" ID="SelectUnitButton" Text="Add New Unit" OnClick="OnButtonAddNewUnitClicked" Class="dnnSecondaryAction" Visible="false"/>
         
                 <asp:Repeater runat="server" DataSource="<%# this.HQUnits %>" OnItemCommand="OnButtonDeleteUnitClicked" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
                     <HeaderTemplate>
@@ -81,7 +75,7 @@
                         <hr/>
                     </ItemTemplate>
                 </asp:Repeater>
-          
+        
                 <asp:Repeater runat="server" OnItemCommand="OnButtonDeleteUnitClicked" DataSource="<%# this.ElitesUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
                     <HeaderTemplate>
                         <h4><%: this.LocalizeString("Elites Choices.Text") %></h4>
@@ -94,13 +88,40 @@
                         <hr/>
                     </ItemTemplate>
                 </asp:Repeater>
+                
+                 <asp:Repeater runat="server" OnItemCommand="OnButtonDeleteUnitClicked" DataSource="<%# this.FAUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
+                    <HeaderTemplate>
+                        <h4><%: this.LocalizeString("Fast Attack Choices.Text") %></h4>
+                        <hr />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <p><%#: Item.UnitData.Name %> : <%#: Item.UnitData.Cost %></p>
+                        <a href="<%#:Item.EditUrl %>" class="dnnSecondaryAction">Edit Unit</a>
+                        <asp:Button runat="server" ID="ButtonDeleteUnit" Text="Delete Unit" CommandArgument="<%# Item.Unit.UnitID %>" class="dnnSecondaryAction" />
+                        <hr/>
+                    </ItemTemplate>
+                </asp:Repeater>
         
+                <asp:Repeater runat="server" OnItemCommand="OnButtonDeleteUnitClicked" DataSource="<%# this.HSUnits %>" ItemType="Testing.Dnn.ArmyManager.ViewArmyManagerViewModel.UnitViewModel">
+                    <HeaderTemplate>
+                        <h4><%: this.LocalizeString("Heavy Support Choices.Text") %></h4>
+                        <hr />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <p><%#: Item.UnitData.Name %> : <%#: Item.UnitData.Cost %></p>
+                        <a href="<%#:Item.EditUrl %>" class="dnnSecondaryAction">Edit Unit</a>
+                        <asp:Button runat="server" ID="ButtonDeleteUnit" Text="Delete Unit" CommandArgument="<%# Item.Unit.UnitID %>" class="dnnSecondaryAction" />
+                        <hr/>
+                    </ItemTemplate>
+                </asp:Repeater>
     </asp:Panel>
 
 
 </div>
 
 <script runat="server">
+
+    public List<string> ListOfTypes = new List<string> { "Select a Unit Type", "HQ", "Troops", "Elites", "Fast Attack", "Heavy Support" };
 
     public IEnumerable<ViewArmyManagerViewModel.UnitViewModel> HQUnits {
         get
@@ -120,6 +141,20 @@
         get
         {
             return this.Model.Army.Where(unit => unit.UnitData.SlotType == "Elites");
+        }
+    }
+
+    public IEnumerable<ViewArmyManagerViewModel.UnitViewModel> FAUnits {
+        get
+        {
+            return this.Model.Army.Where(unit => unit.UnitData.SlotType == "Fast Attack");
+        }
+    }
+
+    public IEnumerable<ViewArmyManagerViewModel.UnitViewModel> HSUnits {
+        get
+        {
+            return this.Model.Army.Where(unit => unit.UnitData.SlotType == "Heavy Support");
         }
     }
 </script>

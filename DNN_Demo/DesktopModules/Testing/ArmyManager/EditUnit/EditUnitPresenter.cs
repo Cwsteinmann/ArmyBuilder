@@ -60,6 +60,42 @@ namespace Testing.Dnn.ArmyManager
                 case 6:
                     newUnit = new Venomthrope();
                     break;
+                case 7:
+                    newUnit = new Haruspex();
+                    break;
+                case 8:
+                    newUnit = new Pyrovore();
+                    break;
+                case 9:
+                    newUnit = new Gargoyle();
+                    break;
+                case 10:
+                    newUnit = new Harpy();
+                    break;
+                case 11:
+                    newUnit = new HiveCrone();
+                    break;
+                case 12:
+                    newUnit = new SporeMine();
+                    break;
+                case 13:
+                    newUnit = new Biovore();
+                    break;
+                case 14:
+                    newUnit = new Tyrannofex();
+                    break;
+                case 15:
+                    newUnit = new Deathleaper();
+                    break;
+                case 16:
+                    newUnit = new OldOneEye();
+                    break;
+                case 17:
+                    newUnit = new Hormagaunt();
+                    break;
+                case 18:
+                    newUnit = new RipperSwarm();
+                    break;
                 default:
                     // TODO: make better default
                     newUnit = new Termagant();

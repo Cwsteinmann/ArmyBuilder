@@ -20,7 +20,7 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
         public Termagant()
         {
             this.Type = "Infantry";
-            this.Name = "Termagant";
+            this.Name = "Termagant Brood";
             this.ServerID = 1;
             this.UnitType = "Troops";
             this.InitialPoints = 40;
@@ -40,7 +40,7 @@ namespace Testing.Dnn.ArmyManager.ArmyManager
                 { "Sv", 6 }
             };
             this.InitialWargear = "Fleshborer";
-            this.SpecialRules = new List<string> { "Move Through Cover", "Instinctive Behaviour(Lurk)" };
+            this.SpecialRules = new List<string> { "Move Through Cover", "Instinctive Behaviour (Lurk)" };
             this.CanUpgradeWargear = true;
             this.WargearUpgrades = new Dictionary<string, int>
             {

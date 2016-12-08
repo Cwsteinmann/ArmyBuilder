@@ -6,23 +6,17 @@ namespace Testing.Dnn.ArmyManager
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
-    using System.Runtime.Remoting.Contexts;
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Collections;
     using DotNetNuke.Common;
-    using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.WebControls;
     using DotNetNuke.Web.Mvp;
 
-    using Engage.Dnn.Framework.EngageLicensing;
     using Engage.Util;
 
     using Testing.Dnn.ArmyManager.ArmyManager;
-    using Testing.Dnn.ArmyManager.ArmyManager.EditUnit;
     using Testing.Dnn.ArmyManager.ArmyManager.Units;
     using Testing.Dnn.ArmyManager.ArmyManager.ViewArmyManager;
 
@@ -44,6 +38,7 @@ namespace Testing.Dnn.ArmyManager
             this.View.ButtonDeleteUnitClicked += this.DeleteUnit;
             this.View.ButtonLoadArmyClicked += this.LoadArmies;
             this.View.ButtonSelectArmyClicked += this.SelectArmy;
+            this.View.ServerValidate += this.ValidateUnitType;
         }
 
         /// <summary>Makes the unit from string.</summary>
@@ -54,7 +49,7 @@ namespace Testing.Dnn.ArmyManager
             Unit newUnit;
             switch (name)
             {
-                case "Termagant":
+                case "Termagant Brood":
                     newUnit = new Termagant();
                     break;
                 case "Hive Tyrant":
@@ -71,6 +66,42 @@ namespace Testing.Dnn.ArmyManager
                     break;
                 case "Venomthrope Brood":
                     newUnit = new Venomthrope();
+                    break;
+                case "Haruspex":
+                    newUnit = new Haruspex();
+                    break;
+                case "Pyrovore Brood":
+                    newUnit = new Pyrovore();
+                    break;
+                case "Gargoyle Brood":
+                    newUnit = new Gargoyle();
+                    break;
+                case "Harpy":
+                    newUnit = new Harpy();
+                    break;
+                case "Hive Crone":
+                    newUnit = new HiveCrone();
+                    break;
+                case "Spore Mine Cluster":
+                    newUnit = new SporeMine();
+                    break;
+                case "Biovore Brood":
+                    newUnit = new Biovore();
+                    break;
+                case "Tyrannofex":
+                    newUnit = new Tyrannofex();
+                    break;
+                case "Deathleaper":
+                    newUnit = new Deathleaper();
+                    break;
+                case "Old One Eye":
+                    newUnit = new OldOneEye();
+                    break;
+                case "Hormagaunt Brood":
+                    newUnit = new Hormagaunt();
+                    break;
+                case "Ripper Swarm Brood":
+                    newUnit = new RipperSwarm();
                     break;
                 default:
                     // TODO: make better default
@@ -110,8 +141,43 @@ namespace Testing.Dnn.ArmyManager
                 case 6:
                     newUnit = new Venomthrope();
                     break;
+                case 7:
+                    newUnit = new Haruspex();
+                    break;
+                case 8:
+                    newUnit = new Pyrovore();
+                    break;
+                case 9:
+                    newUnit = new Gargoyle();
+                    break;
+                case 10:
+                    newUnit = new Harpy();
+                    break;
+                case 11:
+                    newUnit = new HiveCrone();
+                    break;
+                case 12:
+                    newUnit = new SporeMine();
+                    break;
+                case 13:
+                    newUnit = new Biovore();
+                    break;
+                case 14:
+                    newUnit = new Tyrannofex();
+                    break;
+                case 15:
+                    newUnit = new Deathleaper();
+                    break;
+                case 16:
+                    newUnit = new OldOneEye();
+                    break;
+                case 17:
+                    newUnit = new Hormagaunt();
+                    break;
+                case 18:
+                    newUnit = new RipperSwarm();
+                    break;
                 default:
-                    // TODO: make better default
                     newUnit = new Termagant();
                     break;
             }
@@ -303,6 +369,31 @@ namespace Testing.Dnn.ArmyManager
             }
 
             this.RefreshView();
+        }
+
+        private static readonly Dictionary<string, int> Max = new Dictionary<string, int>
+        {
+            { "HQ", 2 },
+            { "Troops", 6 },
+            { "Elites", 3 },
+            { "Fast Attack", 3 },
+            { "Heavy Support", 3 }
+       };
+
+        private void ValidateUnitType(object source, ServerValidateEventArgs e)
+        {
+            int max;
+            if (Max.TryGetValue(e.Value, out max))
+            {
+                if (this.View.Model.Army.Count(unit => unit.Unit.UnitType == e.Value) < max)
+                {
+                    e.IsValid = true;
+                    return;
+                }
+
+                this.View.Model.ErrorMessage = this.LocalizeString("Too Many " + e.Value + ".Error");
+                e.IsValid = false;
+            }
         }
     }
 }

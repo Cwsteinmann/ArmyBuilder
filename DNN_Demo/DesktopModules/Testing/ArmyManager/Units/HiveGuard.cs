@@ -14,7 +14,7 @@ namespace Testing.Dnn.ArmyManager.ArmyManager.Units
         public HiveGuard()
         {
             this.Type = "Infantry";
-            this.Name = "Hive Guard";
+            this.Name = "Hive Guard Brood";
             this.ServerID = 3;
             this.UnitType = "Elites";
             this.InitialPoints = 55;

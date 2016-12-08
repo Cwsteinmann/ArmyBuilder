@@ -42,6 +42,8 @@ namespace Testing.Dnn.ArmyManager
         /// </summary>
         public event EventHandler<ButtonSelectArmyEventArgs> ButtonSelectArmyClicked;
 
+        public event EventHandler<ServerValidateEventArgs> ServerValidate;
+
         /// <summary>Select an Army on click</summary>
         /// <param name="sender">sender</param>
         /// <param name="e">The <see cref="RepeaterCommandEventArgs" /> instance containing the event data.</param>
@@ -76,6 +78,14 @@ namespace Testing.Dnn.ArmyManager
         /// <see cref="ButtonNewUnitClicked" /> occurs.
         protected void OnButtonAddNewUnitClicked(object sender, EventArgs e)
         {
+            this.SelectUnitButton.Visible = false;
+            this.NewUnitDDL.Visible = false;
+            this.PointsValidationLabel.Visible = false;
+            if (!this.Page.IsValid)
+            {
+                return;
+            }
+
             this.ButtonNewUnitClicked?.Invoke(this, new ButtonNewUnitEventArgs(this.NewUnitDDL.SelectedValue));
         }
 
@@ -86,6 +96,34 @@ namespace Testing.Dnn.ArmyManager
         {
             var unitId = int.Parse(((Button)e.CommandSource).CommandArgument);
             this.ButtonDeleteUnitClicked?.Invoke(this, new ButtonDeleteUnitEventArgs(unitId));
+        }
+
+        /// <summary>Handles the OnSelectedIndexChanged event of the UnitTypeDDL control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void UnitTypeDDL_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.Page.IsValid)
+            {
+                this.SelectUnitButton.Visible = false;
+                this.NewUnitDDL.Visible = false;
+                this.PointsValidationLabel.Visible = false;
+                return;
+            }
+
+            var unitType = this.UnitTypeDDL.SelectedValue;
+            this.NewUnitDDL.DataSource = from unit in this.Model.ListOfUnits
+                                         where unit.UnitType == unitType
+                                         select unit.Name;
+            this.NewUnitDDL.DataBind();
+            this.PointsValidationLabel.Visible = true;
+            this.NewUnitDDL.Visible = true;
+            this.SelectUnitButton.Visible = true;
+        }
+
+        protected void OnServerValidate(object source, ServerValidateEventArgs args)
+        {
+           this.ServerValidate?.Invoke(this, args);
         }
     }
 }
